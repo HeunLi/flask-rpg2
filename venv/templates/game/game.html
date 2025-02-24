@@ -7,7 +7,23 @@
 <div class="container mx-auto p-6 text-center">
     <h1 class="text-3xl font-bold">Welcome, {{ player_name }}!</h1>
     <p class="mt-4">Your adventure begins here...</p>
-    <p class="mt-4">You picked the class: {{ player_class["class"] }}</p>
+    
+    {% if player_class %}
+      <div class="mt-4">
+        <h2 class="text-2xl font-semibold">Class: {{ player_class["class"] }}</h2>
+        <ul class="mt-2 space-y-1">
+          <li><strong>HP:</strong> {{ player_class["HP"] }} (Max: {{ player_class["max_HP"] }})</li>
+          <li><strong>ATK:</strong> {{ player_class["ATK"] }}</li>
+          <li><strong>DEF:</strong> {{ player_class["DEF"] }}</li>
+          <li><strong>LVL:</strong> {{ player_class["LVL"] }}</li>
+          <li><strong>EXP:</strong> {{ player_class["EXP"] }}</li>
+          <li><strong>Gold:</strong> {{ player_class["gold"] }}</li>
+        </ul>
+      </div>
+    {% else %}
+      <p class="mt-4">No class selected.</p>
+    {% endif %}
+    
     <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
         Go Back Home
     </button>
