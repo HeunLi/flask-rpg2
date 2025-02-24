@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Battle Scene{% endblock %} {% block
+content%}
+<div class="flex items-center justify-center h-screen">
+	<div class="w-1/2 bg-white p-6 rounded-lg shadow-lg text-center">
+		<h2 class="text-xl font-bold mb-4">Battle!</h2>
+		<div class="flex justify-between mb-6">
+			<div class="p-4 bg-blue-100 rounded-lg w-1/2">
+				<h3 class="text-lg font-semibold">Player</h3>
+				<p>
+					Name:
+					<span id="player-name" class="font-bold">Pikachu</span>
+				</p>
+				<p>HP: <span id="player-hp" class="font-bold">83</span></p>
+			</div>
+			<div class="p-4 bg-red-100 rounded-lg w-1/2">
+				<h3 class="text-lg font-semibold">Enemy</h3>
+				<p>
+					Name: <span id="enemy-name" class="font-bold">Pidgey</span>
+				</p>
+				<p>HP: <span id="enemy-hp" class="font-bold">35</span></p>
+			</div>
+		</div>
+		<div class="grid grid-cols-2 gap-4">
+			<button
+				onclick="attack()"
+				class="bg-blue-500 text-white py-2 px-4 rounded"
+			>
+				Attack
+			</button>
+			<button
+				onclick="useItem()"
+				class="bg-green-500 text-white py-2 px-4 rounded"
+			>
+				Use Item
+			</button>
+			<button
+				onclick="defend()"
+				class="bg-yellow-500 text-white py-2 px-4 rounded"
+			>
+				Defend
+			</button>
+			<button
+				onclick="runAway()"
+				class="bg-red-500 text-white py-2 px-4 rounded"
+			>
+				Run
+			</button>
+		</div>
+		<p id="message" class="mt-4 text-gray-700">What will you do?</p>
+	</div>
+</div>
+<script>
+	function attack() {
+		document.getElementById("message").innerText =
+			"Pikachu used Thunderbolt!";
+	}
+	function useItem() {
+		document.getElementById("message").innerText = "You used a potion!";
+	}
+	function defend() {
+		document.getElementById("message").innerText = "You defended!";
+	}
+	function runAway() {
+		document.getElementById("message").innerText = "You ran away safely!";
+	}
+</script>
+{% endblock %}
