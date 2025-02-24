@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block title %}Battle Scene{% endblock %} {% block
-content%}
+content %}
 <div class="flex items-center justify-center h-screen">
 	<div class="w-1/2 bg-white p-6 rounded-lg shadow-lg text-center">
 		<h2 class="text-xl font-bold mb-4">Battle!</h2>
@@ -8,16 +8,53 @@ content%}
 				<h3 class="text-lg font-semibold">Player</h3>
 				<p>
 					Name:
-					<span id="player-name" class="font-bold">Pikachu</span>
+					<span id="player-name" class="font-bold"
+						>{{ player_name }}</span
+					>
 				</p>
-				<p>HP: <span id="player-hp" class="font-bold">83</span></p>
+				<p>
+					HP:
+					<span id="player-hp" class="font-bold"
+						>{{ player.HP }}</span
+					>
+				</p>
+				<p>
+					ATK:
+					<span id="player-atk" class="font-bold"
+						>{{ player.ATK }}</span
+					>
+				</p>
+				<p>
+					DEF:
+					<span id="player-def" class="font-bold"
+						>{{ player.DEF }}</span
+					>
+				</p>
 			</div>
 			<div class="p-4 bg-red-100 rounded-lg w-1/2">
 				<h3 class="text-lg font-semibold">Enemy</h3>
 				<p>
-					Name: <span id="enemy-name" class="font-bold">Pidgey</span>
+					Name:
+					<span id="enemy-name" class="font-bold"
+						>{{ enemy.name }}</span
+					>
 				</p>
-				<p>HP: <span id="enemy-hp" class="font-bold">35</span></p>
+				<p>
+					HP:
+					<span id="enemy-hp" class="font-bold">{{ enemy.HP }}</span>
+				</p>
+				<p>
+					ATK:
+					<span id="enemy-atk" class="font-bold"
+						>{{ enemy.ATK }}</span
+					>
+				</p>
+				<p>
+					DEF:
+					<span id="enemy-def" class="font-bold"
+						>{{ enemy.DEF }}</span
+					>
+				</p>
 			</div>
 		</div>
 		<div class="grid grid-cols-2 gap-4">
@@ -51,8 +88,9 @@ content%}
 </div>
 <script>
 	function attack() {
-		document.getElementById("message").innerText =
-			"Pikachu used Thunderbolt!";
+		document.getElementById("message").innerText = `${
+			document.getElementById("player-name").innerText
+		} used an attack!`;
 	}
 	function useItem() {
 		document.getElementById("message").innerText = "You used a potion!";
