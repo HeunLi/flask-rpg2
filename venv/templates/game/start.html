@@ -1,0 +1,21 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6 text-center relative">
+    <!-- The image is positioned normally -->
+    <img 
+      class="h-auto w-full"
+      src="{{ url_for('static', filename='images/bg_menu.png') }}"
+      alt="image description"
+    />
+  
+    <!-- This overlay covers the same space as the parent -->
+    <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center">
+      <h1 class="text-3xl font-bold animate-fade-in">Welcome to the Home Page</h1>
+    </div>
+  </div>
+  
+{% endblock %}
