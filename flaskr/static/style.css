@@ -30,27 +30,6 @@ body {
 	background-position: center;
 }
 
-.warp-animation {
-	animation: warpEffect 1s forwards;
-}
-
-@keyframes warpEffect {
-	0% {
-		transform: scale(1);
-		filter: blur(0);
-	}
-	50% {
-		transform: scale(1.5) rotate(5deg);
-		filter: blur(10px);
-		opacity: 0.5;
-	}
-	100% {
-		transform: scale(1);
-		filter: blur(0);
-		opacity: 0;
-	}
-}
-
 .story-container {
 	display: none;
 	position: absolute;
@@ -60,15 +39,42 @@ body {
 	height: 100vh;
 }
 
-.fadeIn {
-	animation: fadeIn 1.5s forwards;
-}
+/* ------------------ */
+/*     ANIMATIONS     */
+/* ------------------ */
 
 @keyframes fadeIn {
 	from {
 		opacity: 0;
+		transform: translateY(20px);
 	}
 	to {
 		opacity: 1;
+		transform: translateY(0);
 	}
+}
+
+.fadeIn {
+	animation: fadeIn 1.5s forwards;
+}
+
+.animate-fade-in {
+	opacity: 0;
+	animation: fadeIn 1s ease-out forwards;
+}
+
+.delay-300 {
+	animation-delay: 300ms;
+}
+
+.delay-600 {
+	animation-delay: 600ms;
+}
+
+.delay-900 {
+	animation-delay: 900ms;
+}
+
+.delay-1200 {
+	animation-delay: 1200ms;
 }

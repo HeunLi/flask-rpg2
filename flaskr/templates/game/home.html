@@ -2,7 +2,7 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 <div
-	class="start_bg hidden flex-col items-center justify-center fadeIn"
+	class="start_bg flex flex-col items-center justify-center fadeIn"
 	id="startMenu"
 >
 	<div class="text-center space-y-1">
@@ -14,13 +14,13 @@
 		onclick="startGame()"
 		id="startButton"
 		data-player-exists="{{ 'true' if player else 'false' }}"
-		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
+		class="bg-amber-500 hover:bg-amber-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
 	>
 		Start Game
 	</button>
 	<button
 		onclick="window.close()"
-		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
+		class="bg-amber-500 hover:bg-amber-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
 	>
 		Exit
 	</button>
@@ -36,10 +36,47 @@
 	</video>
 </div>
 
-<div class="relative block fadeIn" id="storyScene">
-	<h1 class="text-4xl pixel_font">Story Scene here!</h1>
+<div
+	class="relative hidden fadeIn min-h-screen bg-neutral-900 flex flex-col items-center justify-center p-8"
+	id="storyScene"
+>
+	<div class="max-w-2xl text-center space-y-8">
+		<h1 class="text-5xl pixel_font text-amber-500 mb-8">
+			The Legend Begins...
+		</h1>
 
-	<button onclick="window.location.href='start'">Start Adventure</button>
+		<div class="story-text space-y-6 text-lg text-gray-300">
+			<p class="animate-fade-in">
+				In the mystical archipelago of ancient Philippines, darkness has
+				begun to spread across the land. The once-peaceful realms of the
+				Forest, Mountains, Cave, and Swamp have fallen into chaos.
+			</p>
+
+			<p class="animate-fade-in delay-300">
+				The Diwatas, ancient guardian spirits of the forest, have grown
+				hostile. Tikbalangs roam the wilderness unchecked, while Kapres
+				terrorize travelers from their mighty trees.
+			</p>
+
+			<p class="animate-fade-in delay-600">
+				As ancient prophecies foretold, a hero must rise - one who can
+				restore balance to these troubled lands and bring peace to both
+				the mortal and spirit worlds.
+			</p>
+
+			<p class="animate-fade-in delay-900">
+				You have been chosen. The path ahead is treacherous, but destiny
+				awaits...
+			</p>
+		</div>
+
+		<button
+			onclick="window.location.href='start'"
+			class="mt-8 bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out animate-bounce"
+		>
+			Begin Your Journey
+		</button>
+	</div>
 </div>
 
 <script>

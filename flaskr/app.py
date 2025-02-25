@@ -49,6 +49,9 @@ def start():
 def game():
     player = load_player()
 
+    if player is None:
+        return redirect(url_for("start"))
+
     if not player["HP"] > 0:
         return render_template("game/game_over.html")
 
@@ -116,14 +119,15 @@ def battle_attack():
         enemy["HP"] = 0  # Ensure enemy HP does not go negative
         message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
-        
+        add_experience(player, enemy["exp"])
+
         # Save progress
         save_world(world_state)
         save_player(player)
 
         # Remove enemy from battle state
         world_state.pop("current_battle", None)
-        
+
         return jsonify(
             {
                 "message": message,
@@ -134,7 +138,9 @@ def battle_attack():
         )
 
     # Process enemy counter-attack
-    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(enemy, player)
+    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
+        enemy, player
+    )
     player["HP"] -= final_damage
     message += f" {enemy['name']} counterattacked for {final_damage:.1f} damage!"
 
@@ -156,7 +162,6 @@ def battle_attack():
     return jsonify(
         {"message": message, "battle_over": False, "player": player, "enemy": enemy}
     )
-
 
 
 @app.route("/battle/defend", methods=["POST"])
@@ -269,7 +274,7 @@ def inventory():
             {
                 "gold": player.get("gold", 0),
                 "HP": player.get("HP"),
-                "max_HP": player.get("max_HP"),
+                "MAX_HP": player.get("MAX_HP"),
                 "equipped_weapon": player.get("equipped_weapon"),
                 "weapons": player["inventory"]["weapons"],
                 "items": player["inventory"]["items"],
@@ -311,9 +316,9 @@ def use_item():
             return jsonify({"error": "Invalid item index"}), 400
         item = items.pop(idx)
         if item["name"] in ["Small Potion", "Health Potion"]:
-            heal_amount = int(player["max_HP"] * item["heal"])  # Convert to integer
+            heal_amount = int(player["MAX_HP"] * item["heal"])
             old_hp = player["HP"]
-            player["HP"] = min(player["HP"] + heal_amount, player["max_HP"])
+            player["HP"] = min(player["HP"] + heal_amount, player["MAX_HP"])
             save_player(player)
             return jsonify(
                 {
