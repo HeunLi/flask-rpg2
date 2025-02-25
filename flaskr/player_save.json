@@ -1,6 +1,6 @@
 {
     "class": "Swordsman",
-    "HP": 16,
+    "HP": 25,
     "ATK": 5,
     "DEF": 6,
     "LVL": 1,

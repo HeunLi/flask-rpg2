@@ -292,9 +292,9 @@ def use_item():
             return jsonify({"error": "Invalid item index"}), 400
         item = items.pop(idx)
         if item["name"] in ["Small Potion", "Health Potion"]:
-            heal_amount = int(player["max_HP"] * item["heal"])  # Convert to integer
+            heal_amount = int(player["MAX_HP"] * item["heal"])  # Convert to integer
             old_hp = player["HP"]
-            player["HP"] = min(player["HP"] + heal_amount, player["max_HP"])
+            player["HP"] = min(player["HP"] + heal_amount, player["MAX_HP"])
             save_player(player)
             return jsonify(
                 {
