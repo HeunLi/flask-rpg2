@@ -1,0 +1,16 @@
+<!-- templates/battle.html -->
+{% extends "base.html" %}
+
+{% block title %}Battle - {{ location }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6 text-center">
+    {% if location %}
+        <h1 class="text-3xl font-bold">Welcome to the {{ location }}!</h1>
+        <!-- Here you can add enemy encounters and area-specific logic -->
+         <div class="row-span-8"></div>
+    {% else %}
+        <h1 class="text-3xl font-bold">No location selected!</h1>
+    {% endif %}
+</div>
+{% endblock %}

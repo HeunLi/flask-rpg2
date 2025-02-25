@@ -79,27 +79,12 @@ def game():
     player_name = session.get('player_name', 'Adventurer')
     player_class = session.get('player_class')
     return render_template('game/game.html', player_name=player_name, player_class=player_class)
-
-
+    
 @app.route('/battle')
 def battle():
-    player_name = session.get('player_name', 'Adventurer')
-    player_class = session.get('player_class')
-    
-    if not player_class:
-        return redirect(url_for('start'))
-    
-    enemy = {
-        "name": "Pidgey",
-        "HP": 35.0,
-        "max_HP": 35.0,
-        "ATK": 4.0,
-        "DEF": 2.0,
-        "LVL": 1,
-    }
-    
-    return render_template('battle/index.html', player_name=player_name, player=player_class, enemy=enemy)
-
+    # Get the chosen location from the query string, e.g., /battle?location=Forest
+    location = request.args.get('location', None)
+    return render_template('game/battle.html', location=location)
 
 if __name__ == '__main__':
     app.run(debug=True)
