@@ -1,0 +1,33 @@
+{
+    "class": "Swordsman",
+    "HP": 51,
+    "ATK": 8.0,
+    "DEF": 9.0,
+    "LVL": 4,
+    "EXP": 300,
+    "MAX_HP": 55.0,
+    "inventory": {
+        "weapons": [
+            {
+                "name": "Basic Sword",
+                "ATK": 2
+            }
+        ],
+        "items": [
+            {
+                "name": "Small Potion",
+                "heal": 0.25
+            },
+            {
+                "name": "Health Potion",
+                "heal": 0.5
+            }
+        ]
+    },
+    "equipped_weapon": {
+        "name": "Basic Sword",
+        "ATK": 2
+    },
+    "gold": 100,
+    "username": "Borot"
+}

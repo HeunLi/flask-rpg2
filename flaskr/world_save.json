@@ -1,0 +1,15 @@
+{
+    "defeated_enemies": {
+        "Forest": [
+            "Diwata",
+            "Kapri",
+            "Tikbalang",
+            "Big Boss"
+        ],
+        "Mountains": [],
+        "Swamp": []
+    },
+    "visited_areas": [
+        "Forest"
+    ]
+}
