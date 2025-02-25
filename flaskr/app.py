@@ -94,37 +94,30 @@ def battle_attack():
 
     # Handle enemy defeat
     if enemy["HP"] <= 0:
+        enemy["HP"] = 0  # Ensure enemy HP does not go negative
         message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
-
-        # Process drops
-        drop = random.choice(enemy["DROPS"])
-        if drop["type"] == "weapon":
-            player["inventory"]["weapons"].append({"name": drop["name"], "ATK": drop["ATK"]})
-            message += f" Enemy dropped a {drop['name']} (Weapon, ATK: {drop['ATK']})."
-        else:
-            player["inventory"]["items"].append({"name": drop["name"]})
-            message += f" Enemy dropped a {drop['name']} (Item)."
-
-        add_experience(player, enemy["EXP_DROP"])
-        world_state.pop("current_battle", None)  # Clear battle state
+        
+        # Save progress
         save_world(world_state)
         save_player(player)
 
+        # Remove enemy from battle state
+        world_state.pop("current_battle", None)
+        
         return jsonify(
-            {"message": message, "battle_over": True, "player": player, "enemy": enemy}
+            {
+                "message": message,
+                "battle_over": True,  # Mark battle as over
+                "player": player,
+                "enemy": enemy,
+            }
         )
 
     # Process enemy counter-attack
-    if enemy["name"].lower() == "big boss":
-        # Boss logic here...
-        pass
-    else:
-        raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-            enemy, player
-        )
-        player["HP"] -= final_damage
-        message += f"{enemy['name']} counterattacked for {final_damage:.1f} damage! "
+    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(enemy, player)
+    player["HP"] -= final_damage
+    message += f" {enemy['name']} counterattacked for {final_damage:.1f} damage!"
 
     # Check player defeat
     if player["HP"] <= 0:
@@ -144,6 +137,7 @@ def battle_attack():
     return jsonify(
         {"message": message, "battle_over": False, "player": player, "enemy": enemy}
     )
+
 
 
 @app.route("/battle/defend", methods=["POST"])
