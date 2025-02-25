@@ -21,7 +21,7 @@ player = {}
 
 SHOP_ITEMS = [
     {"name": "Iron Sword", "ATK": 5.0, "cost": 50, "type": "weapon"},
-    {"name": "Health Potion", "heal": 25, "cost": 30, "type": "item"},
+    {"name": "Health Potion", "heal": 0.5, "cost": 30, "type": "item"},
 ]
 
 

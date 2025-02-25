@@ -43,7 +43,7 @@ def encounter_enemies(area, world_state):
         ],
         "Mountains": [
             {
-                "name": "Mananggal",
+                "name": "Manananggal",
                 "HP": 25,
                 "ATK": 5,
                 "DEF": 4,
