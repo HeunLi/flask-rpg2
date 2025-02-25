@@ -83,21 +83,8 @@
 
 <script>
 	function startGame() {
-		const startButton = document.getElementById("startButton");
-		const playerExists = startButton.dataset.playerExists === "true";
-
-		if (playerExists) {
-			window.location.href = "/game";
-			return;
-		}
-
-		const startMenu = document.getElementById("startMenu");
-		const storyScene = document.getElementById("storyScene");
 		const transitionVideo = document.getElementById("transitionVideo");
 		const videoElement = document.getElementById("videoElement");
-
-		startMenu.classList.remove("flex");
-		startMenu.classList.add("hidden");
 
 		transitionVideo.classList.remove("hidden");
 		transitionVideo.classList.add("fadeIn");
@@ -109,7 +96,21 @@
 			videoElement.onended();
 		}, 2000);
 
+		const startButton = document.getElementById("startButton");
+		const playerExists = startButton.dataset.playerExists === "true";
+
+		const startMenu = document.getElementById("startMenu");
+		const storyScene = document.getElementById("storyScene");
+		startMenu.classList.remove("flex");
+		startMenu.classList.add("hidden");
+
 		videoElement.onended = function () {
+			if (playerExists) {
+				transitionVideo.classList.add("fadeOut");
+				window.location.href = "/game";
+				return;
+			}
+
 			transitionVideo.classList.add("hidden");
 			storyScene.classList.remove("hidden");
 			storyScene.classList.remove("block");

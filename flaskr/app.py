@@ -140,9 +140,70 @@ def reset_game():
 
 @app.route("/explore")
 def explore():
-    # player = load_player()
-    # world_state = load_world()
-    return render_template("game/explore.html")
+    location = request.args.get("location", None)
+    enemy = None
+
+    player = load_player()
+    world_state = load_world()
+
+    if location not in ["Forest", "Cave", "Swamp", "Mountains"]:
+        return redirect(url_for("game/game.html", player=player))
+
+    # encounter enemy only if you haven't cleared the area
+    enemy = encounter_enemies(location, world_state)
+    print(enemy)
+
+    # added back the 30% chance of encountering an enemy
+    if random.random() < 0.3:
+        if enemy is not None:
+            world_state["current_battle"] = {"enemy": enemy, "area": location}
+            save_world(world_state)
+            return render_template("game/battle.html", location=location, enemy=enemy)
+
+    # if enemy is none meaning area is cleared
+    if enemy is None:
+        return render_template(
+            "game/explore.html", player=player, location=location, cleared_area=True
+        )
+
+    # if location not in defeated_enemies meaning location has not been visited then we init it with an empty defeated enemy list
+    if location not in world_state["defeated_enemies"]:
+        world_state["defeated_enemies"][location] = []
+
+    return render_template(
+        "game/explore.html", player=player, location=location, cleared_area=False
+    )
+
+
+@app.route("/sleep", methods=["POST"])
+def sleep():
+    player = load_player()
+
+    if int(player["HP"]) == int(player["MAX_HP"]):
+        return jsonify(
+            {
+                "message": "HP is Full, Cannot Sleep!",
+                "healed": 0,
+                "current_hp": player["HP"],
+                "max_hp": player["MAX_HP"],
+            }
+        )
+
+    heal_amount = player["MAX_HP"] * 0.05
+    old_hp = player["HP"]
+    player["HP"] = int(round(min(player["HP"] + heal_amount, player["MAX_HP"])))
+    healed = player["HP"] - old_hp
+
+    save_player(player)
+
+    return jsonify(
+        {
+            "message": "You slept and restored some HP",
+            "healed": round(healed, 1),
+            "current_hp": round(player["HP"], 1),
+            "max_hp": round(player["MAX_HP"], 1),
+        }
+    )
 
 
 # -------------------------------------------

@@ -1,15 +1,16 @@
 {
-    "class": "Wizard",
-    "HP": 10,
-    "ATK": 6,
-    "DEF": 4,
+
+    "class": "Swordsman",
+    "HP": 25,
+    "ATK": 5,
+    "DEF": 6,
     "LVL": 1,
     "EXP": 0,
-    "MAX_HP": 20,
+    "MAX_HP": 25,
     "inventory": {
         "weapons": [
             {
-                "name": "Basic Staff",
+                "name": "Basic Sword",
                 "ATK": 2
             }
         ],
@@ -25,9 +26,9 @@
         ]
     },
     "equipped_weapon": {
-        "name": "Basic Staff",
+        "name": "Basic Sword",
         "ATK": 2
     },
     "gold": 100,
-    "username": "Spring Valley"
+    "username": "Qwerty"
 }

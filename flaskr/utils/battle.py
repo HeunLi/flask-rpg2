@@ -3,6 +3,7 @@ import random
 
 def encounter_enemies(area, world_state):
     """Randomly selects an enemy for the given area, including bosses if conditions are met."""
+    """Meet enemy only when the area hasn't been cleared yet."""
     # Regular enemies by area
     enemies = {
         "Forest": [

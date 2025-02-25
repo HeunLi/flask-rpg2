@@ -8,4 +8,5 @@
 8. Stats on choosing a class - Niel
 9. UI Improvements - xxx
 10. When Leveling up add a popup with increased stats - xxx
-11. test
+11. Add a paragraph by paragraph delay on story scene
+12. ENEMY DROPS
