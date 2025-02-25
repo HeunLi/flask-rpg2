@@ -1,15 +1,15 @@
 {
-    "class": "Swordsman",
-    "HP": 25.0,
-    "ATK": 5.0,
-    "DEF": 6.0,
+    "class": "Ranger",
+    "HP": 22.0,
+    "ATK": 5.5,
+    "DEF": 5.0,
     "LVL": 1,
     "EXP": 0,
-    "MAX_HP": 25.0,
+    "MAX_HP": 22.0,
     "inventory": {
         "weapons": [
             {
-                "name": "Basic Sword",
+                "name": "Basic Bow",
                 "ATK": 2.0
             }
         ],
@@ -25,9 +25,9 @@
         ]
     },
     "equipped_weapon": {
-        "name": "Basic Sword",
+        "name": "Basic Bow",
         "ATK": 2.0
     },
     "gold": 100,
-    "username": "qwerty"
+    "username": "Qwerty"
 }

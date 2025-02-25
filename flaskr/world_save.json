@@ -1,9 +1,0 @@
-{
-	"defeated_enemies": {
-		"Cave": [],
-		"Forest": ["Kapri", "Tikbalang", "Diwata"],
-		"Mountains": [],
-		"Swamp": []
-	},
-	"visited_areas": ["Forest"]
-}

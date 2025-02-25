@@ -10,7 +10,7 @@
 	<button
 		onclick="startGame()"
 		id="startButton"
-		data-playerExists="{{ 'true' if player else 'false' }}"
+		data-player-exists="{{ 'true' if player else 'false' }}"
 		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
 	>
 		Start Game
@@ -44,8 +44,7 @@
 		const playerExists = startButton.dataset.playerExists === "true";
 
 		if (playerExists) {
-			// Redirect to game page if player exists
-			window.location.href = "{{ url_for('game') }}";
+			window.location.href = "/game";
 			return;
 		}
 
