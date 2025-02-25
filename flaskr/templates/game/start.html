@@ -25,7 +25,7 @@
                     id="classImage" 
                     src="{{ url_for('static', filename='images/swordsman.png') }}" 
                     alt="Class Image" 
-                    class="mb-4" 
+                    class="mb-4 animate__animated animate__flipInY" 
                     style="max-height:300px;"
                     />
                     <p id="className" class="text-gray-700"></p>
@@ -71,14 +71,20 @@
     let selectedIndex = 1;
   
     function updateClassDisplay() {
-      const classImage = document.getElementById('classImage');
-      const className = document.getElementById('className');
-      const playerClassInput = document.getElementById('playerClassInput');
-  
-      const currentClass = classes[selectedIndex];
-      classImage.src = currentClass.image;
-      className.textContent = currentClass.name;
-      playerClassInput.value = serverMapping[selectedIndex];
+        const classImage = document.getElementById('classImage');
+        const className = document.getElementById('className');
+        const playerClassInput = document.getElementById('playerClassInput');
+
+        const currentClass = classes[selectedIndex];
+        classImage.src = currentClass.image;
+        className.textContent = currentClass.name;
+        playerClassInput.value = serverMapping[selectedIndex];
+
+        // Restart the animation:
+        classImage.classList.remove('animate__flipInY');
+        // Force a reflow to reset the animation state
+        void classImage.offsetWidth;
+        classImage.classList.add('animate__flipInY');
     }
   
     document.getElementById('leftArrow').addEventListener('click', function() {
