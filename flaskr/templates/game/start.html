@@ -1,103 +1,221 @@
 <!-- templates/home.html -->
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
 
-{% block title %}Home{% endblock %}
+<form action="{{ url_for('start') }}" method="POST" class="relative">
+	<h1
+		class="absolute top-12 left-1/2 tranform -translate-x-1/2 pixel_font text-4xl text-center w-full"
+	>
+		Select Your Class and Add Your Name
+	</h1>
+	<div class="flex flex-col justify-center items-center h-screen p-20 gap-5">
+		<div class="w-full h-full flex items-center justify-center gap-5">
+			<div
+				class="w-1/3 h-[calc(100%-100px)] bg-neutral-500/20 p-5 rounded-2xl relative"
+			>
+				<div class="w-full h-full relative">
+					<span
+						id="className"
+						class="pixel_font text-4xl font-medium text-amber-400 absolute top-5 left-1/2 transform -translate-x-1/2 z-50"
+						>Wizard</span
+					>
+					<img
+						id="classImage"
+						src="{{ url_for('static', filename='images/swordsman.png') }}"
+						alt="Class Image"
+						class="w-full h-full object-cover rounded-xl animate__animated animate__flipInY"
+					/>
+				</div>
+				<div
+					class="mt-11 w-full flex items-center justify-between gap-5"
+				>
+					<button
+						id="leftArrow"
+						type="button"
+						class="rounded-full bg-amber-500 w-12 py-3 text-neutral-900 hover:bg-amber-600"
+					>
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+					<button
+						id="rightArrow"
+						type="button"
+						class="rounded-full bg-amber-500 w-12 py-3 text-neutral-900 hover:bg-amber-600"
+					>
+						<i class="fa-solid fa-arrow-right"></i>
+					</button>
+				</div>
+			</div>
+			<div
+				class="w-1/3 h-[calc(100%-100px)] bg-neutral-500/20 p-5 rounded-2xl"
+			>
+				<div class="w-full h-full">
+					<div class="w-full mb-5">
+						<input
+							type="text"
+							name="player_name"
+							class="rounded-sm px-2 py-2 text-neutral-900"
+							placeholder="Enter Your Username Here (required)"
+							required
+						/>
+					</div>
+					<h1 class="pixel_font text-4xl font-medium text-white">
+						Class Stats
+					</h1>
+					<div class="grid grid-cols-1 gap-3 mt-4">
+						<div class="pixel_font text-xl">
+							<span>HP:</span>
+							<span id="HP" class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>MAX HP:</span>
+							<span id="MAX_HP" class="text-amber-400 ml-1"
+								>20</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>ATK:</span>
+							<span id="ATK" class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>DEF:</span>
+							<span id="DEF" class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>LVL:</span>
+							<span id="LVL" class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>EXP:</span>
+							<span id="EXP" class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>GOLD:</span>
+							<span id="GOLD" class="text-amber-400 ml-1"
+								>20</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>WEAPON:</span>
+							<span id="WEAPON" class="text-amber-400 ml-1"
+								>Weapon</span
+							>
+						</div>
+					</div>
+				</div>
+				<div class="mt-11 flex items-center justify-center">
+					<input
+						type="hidden"
+						name="player_class"
+						id="playerClassInput"
+						value="1"
+					/>
+					<button
+						type="submit"
+						class="bg-amber-500 w-full py-3 rounded-3xl text-neutral-900 font-medium hover:bg-amber-600"
+					>
+						Start Your Adventure
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 
-{% block content %}
-<div class="container mx-auto p-6 text-center relative fadeIn">
-    <div class="w-full h-full flex flex-col items-center justify-center">
-      <h1 class="text-3xl font-bold mb-4 animate-fade-in">Enter Your Name & Select Your Class</h1>
-      <form action="{{ url_for('start') }}" method="POST">
-        <div class="grid grid-cols-4 grid-rows-6 gap-4">
-            <div class="col-span-2 row-start-1 content-end">
-                <input 
-                type="text" 
-                name="player_name" 
-                placeholder="Your Name" 
-                required
-                class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600"
-                />
-            </div>
-            <div class="row-span-4 col-span-2 row-start-2 ...">
-                <div class="bg-white border border-gray-300 p-6 rounded-lg shadow-md h-[400px] w-[250px]">
-                    <h2 class="text-xl font-bold mb-4 text-neutral-900">Select your Class</h2>
-                    <img 
-                    id="classImage" 
-                    src="{{ url_for('static', filename='images/swordsman.png') }}" 
-                    alt="Class Image" 
-                    class="mb-4 animate__animated animate__flipInY" 
-                    style="max-height:300px;"
-                    />
-                    <p id="className" class="text-gray-700"></p>
-                </div>
-            </div>  
-            <div class="row-span-1 row-start-6">
-                <button type="button" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded-full w-[85px]" id="leftArrow">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-            </div>
-            <div class="row-span-1 row-start-6">
-                <button type="button" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded-full w-[85px]" id="rightArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-            <input type="hidden" name="player_class" id="playerClassInput" value="1">
-            <div class="col-span-2 row-span-3 bg-white rounded text-neutral-900 row-start-2">
-                <p>Stats Here</p>
-            </div>
-            <div class="col-span-2 row-start-5">
-                <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded">
-                  Start Game
-                </button>
-            </div>
-        </form>
-      </div> 
-    </div>
-  </div>
+<script>
+	const classes = [
+		{
+			name: "Swordsman",
+			image: "{{ url_for('static', filename='images/swordsman.png') }}",
+			stats: {
+				HP: 25,
+				MAX_HP: 25,
+				ATK: 5,
+				DEF: 6,
+				LVL: 1,
+				EXP: 0,
+				gold: 100,
+				weapon: "Basic Sword",
+			},
+		},
+		{
+			name: "Wizard",
+			image: "{{ url_for('static', filename='images/wizard.png') }}",
+			stats: {
+				HP: 20,
+				MAX_HP: 20,
+				ATK: 6,
+				DEF: 4,
+				LVL: 1,
+				EXP: 0,
+				gold: 100,
+				weapon: "Basic Staff",
+			},
+		},
+		{
+			name: "Ranger",
+			image: "{{ url_for('static', filename='images/ranger.png') }}",
+			stats: {
+				HP: 22,
+				MAX_HP: 22,
+				ATK: 5,
+				DEF: 5,
+				LVL: 1,
+				EXP: 0,
+				gold: 100,
+				weapon: "Basic Bow",
+			},
+		},
+	];
 
-  <script>
-    const classes = [
-      { name: "Swordsman", image: "{{ url_for('static', filename='images/swordsman.png') }}" },
-      { name: "Wizard",    image: "{{ url_for('static', filename='images/wizard.png') }}" },
-      { name: "Ranger",    image: "{{ url_for('static', filename='images/ranger.png') }}" }
-    ];
-  
-    // Map the array index to the server's expected values:
-    // Index 0: Swordsman -> "2"
-    // Index 1: Wizard    -> "1"
-    // Index 2: Ranger    -> "3"
-    const serverMapping = ["2", "1", "3"];
-  
-    let selectedIndex = 1;
-  
-    function updateClassDisplay() {
-        const classImage = document.getElementById('classImage');
-        const className = document.getElementById('className');
-        const playerClassInput = document.getElementById('playerClassInput');
+	// Map the array index to the server's expected values:
+	// Index 0: Swordsman -> "2"
+	// Index 1: Wizard    -> "1"
+	// Index 2: Ranger    -> "3"
+	const serverMapping = ["2", "1", "3"];
 
-        const currentClass = classes[selectedIndex];
-        classImage.src = currentClass.image;
-        className.textContent = currentClass.name;
-        playerClassInput.value = serverMapping[selectedIndex];
+	let selectedIndex = 0;
 
-        // Restart the animation:
-        classImage.classList.remove('animate__flipInY');
-        // Force a reflow to reset the animation state
-        void classImage.offsetWidth;
-        classImage.classList.add('animate__flipInY');
-    }
-  
-    document.getElementById('leftArrow').addEventListener('click', function() {
-      selectedIndex = (selectedIndex - 1 + classes.length) % classes.length;
-      updateClassDisplay();
-    });
-  
-    document.getElementById('rightArrow').addEventListener('click', function() {
-      selectedIndex = (selectedIndex + 1) % classes.length;
-      updateClassDisplay();
-    });
-  
-    updateClassDisplay();
-  </script>
-  
+	function updateClassDisplay() {
+		const className = document.getElementById("className");
+		const classImage = document.getElementById("classImage");
+		const playerClassInput = document.getElementById("playerClassInput");
+
+		const currentClass = classes[selectedIndex];
+		classImage.src = currentClass.image;
+		className.textContent = currentClass.name;
+		playerClassInput.value = serverMapping[selectedIndex];
+
+		// Update stats display using IDs
+		document.getElementById("HP").textContent = currentClass.stats.HP;
+		document.getElementById("MAX_HP").textContent =
+			currentClass.stats.MAX_HP;
+		document.getElementById("ATK").textContent = currentClass.stats.ATK;
+		document.getElementById("DEF").textContent = currentClass.stats.DEF;
+		document.getElementById("LVL").textContent = currentClass.stats.LVL;
+		document.getElementById("EXP").textContent = currentClass.stats.EXP;
+		document.getElementById("GOLD").textContent = currentClass.stats.gold;
+		document.getElementById("WEAPON").textContent =
+			currentClass.stats.weapon;
+
+		// Restart the animation
+		classImage.classList.remove("animate__flipInY");
+		void classImage.offsetWidth;
+		classImage.classList.add("animate__flipInY");
+	}
+
+	document.getElementById("leftArrow").addEventListener("click", function () {
+		selectedIndex = (selectedIndex - 1 + classes.length) % classes.length;
+		updateClassDisplay();
+	});
+
+	document
+		.getElementById("rightArrow")
+		.addEventListener("click", function () {
+			selectedIndex = (selectedIndex + 1) % classes.length;
+			updateClassDisplay();
+		});
+
+	updateClassDisplay();
+</script>
+
 {% endblock %}
