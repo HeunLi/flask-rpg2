@@ -15,12 +15,7 @@
         ],
         "items": [
             {
-                "name": "Small Potion",
-                "heal": 0.25
-            },
-            {
-                "name": "Health Potion",
-                "heal": 0.5
+                "name": "Health Potion"
             }
         ]
     },
@@ -28,7 +23,6 @@
         "name": "Basic Sword",
         "ATK": 2
     },
-    "gold": 100,
+    "gold": 75,
     "username": "Spring Valley"
 }
-
