@@ -1,0 +1,109 @@
+<!-- Inventory Modal (shared snippet) -->
+<div id="inventoryModal" class="fixed inset-0 hidden bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white text-neutral-900">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center pb-3">
+        <h2 class="text-xl font-bold">Inventory</h2>
+        <div id="closeModal" class="cursor-pointer">
+          <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+            <path d="M14.53 3.47a.75.75 0 0 0-1.06 0L9 7.94 4.53 3.47a.75.75 0 1 0-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 0 0 1.06 1.06L9 10.06l4.47 4.47a.75.75 0 0 0 1.06-1.06L10.06 9l4.47-4.47a.75.75 0 0 0 0-1.06z"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Modal Content -->
+      <div id="inventoryContent" class="my-5">
+        <!-- Inventory details will be loaded here -->
+        Loading inventory...
+      </div>
+      <!-- Modal Footer -->
+      <div class="flex justify-end pt-2">
+        <button id="closeBtn" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  // Function to load inventory data from the server and populate the modal.
+  function loadInventory() {
+      fetch('{{ url_for("inventory") }}')
+        .then(response => response.json())
+        .then(data => {
+            let content = `<p>Gold: ${data.gold}</p>`;
+            content += `<p>HP: ${data.HP} / ${data.max_HP}</p>`;
+            content += `<p>Equipped Weapon: ${data.equipped_weapon ? data.equipped_weapon.name + " (ATK bonus: " + data.equipped_weapon.ATK + ")" : "None"}</p>`;
+            content += `<h3 class="mt-4 font-semibold">Weapons:</h3><ul>`;
+            data.weapons.forEach((weapon, index) => {
+                content += `<li>${index+1}. ${weapon.name} (ATK bonus: ${weapon.ATK}) 
+                            <button class="text-sm text-blue-500 ml-2" onclick="equipWeapon(${index+1})">Equip</button></li>`;
+            });
+            content += `</ul>`;
+            content += `<h3 class="mt-4 font-semibold">Items:</h3><ul>`;
+            data.items.forEach((item, index) => {
+                content += `<li>${index+1}. ${item.name} 
+                            <button class="text-sm text-blue-500 ml-2" onclick="useItem(${index+1})">Use</button></li>`;
+            });
+            content += `</ul>`;
+            document.getElementById('inventoryContent').innerHTML = content;
+        })
+        .catch(err => {
+            document.getElementById('inventoryContent').innerHTML = '<p>Error loading inventory.</p>';
+            console.error(err);
+        });
+  }
+  
+  // Event listeners for opening and closing the modal
+  function setupInventoryModal() {
+    const bagButtons = document.querySelectorAll('.bagButton');
+    bagButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+          document.getElementById('inventoryModal').classList.remove('hidden');
+          loadInventory();
+      });
+    });
+    
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('inventoryModal').classList.add('hidden');
+    });
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        document.getElementById('inventoryModal').classList.add('hidden');
+    });
+  }
+  
+  // AJAX call to equip a weapon.
+  function equipWeapon(index) {
+      let formData = new FormData();
+      formData.append('weapon_index', index);
+      fetch('{{ url_for("equip_weapon") }}', {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          alert(data.message || data.error);
+          loadInventory();  // Refresh inventory info
+      })
+      .catch(err => console.error(err));
+  }
+  
+  // AJAX call to use an item.
+  function useItem(index) {
+      let formData = new FormData();
+      formData.append('item_index', index);
+      fetch('{{ url_for("use_item") }}', {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          alert(data.message || data.error);
+          loadInventory();  // Refresh inventory info
+      })
+      .catch(err => console.error(err));
+  }
+  
+  // Initialize modal when the page loads.
+  document.addEventListener("DOMContentLoaded", setupInventoryModal);
+  </script>
+  

@@ -1,0 +1,35 @@
+{
+    "ATK": 7.0,
+    "DEF": 5.0,
+    "EXP": 0,
+    "HP": 25.0,
+    "LVL": 2,
+    "class": "Wizard",
+    "equipped_weapon": {
+        "ATK": 2.0,
+        "name": "Basic Staff"
+    },
+    "gold": 100,
+    "inventory": {
+        "items": [
+            {
+                "heal": 0.25,
+                "name": "Small Potion"
+            },
+            {
+                "heal": 0.5,
+                "name": "Health Potion"
+            },
+            {
+                "name": "Healing Herb"
+            }
+        ],
+        "weapons": [
+            {
+                "ATK": 2.0,
+                "name": "Basic Staff"
+            }
+        ]
+    },
+    "max_HP": 25.0
+}
