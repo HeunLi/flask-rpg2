@@ -15,56 +15,98 @@
     <!-- This overlay covers the same space as the parent -->
     <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center">
       <h1 class="text-3xl font-bold mb-4 animate-fade-in">Enter Your Name & Select Your Class</h1>
-        
-      <div class="grid grid-cols-3 grid-rows-6 gap-4">
-        <div class="row-span-5 col-span-2 ...">
-            <div class="bg-white border border-gray-300 p-6 rounded-lg shadow-md h-[400px] w-[250px]">
-                <h2 class="text-xl font-bold mb-4 text-neutral-900">Select your Class</h2>
-                <p class="text-gray-700">This is a simple box created using Tailwind CSS.</p>
+      <form action="{{ url_for('start') }}" method="POST">
+        <div class="grid grid-cols-4 grid-rows-6 gap-4">
+            <div class="col-span-2 row-start-1 content-end">
+                <input 
+                type="text" 
+                name="player_name" 
+                placeholder="Your Name" 
+                required
+                class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600"
+                />
             </div>
-        </div>  
-        <div class="row-span-1 row-start-6">
-            <p>1</p>
-        </div>
-        <div class="row-span-1 row-start-6">
-            <p>2</p>
-        </div>
+            <div class="row-span-4 col-span-2 row-start-2 ...">
+                <div class="bg-white border border-gray-300 p-6 rounded-lg shadow-md h-[400px] w-[250px]">
+                    <h2 class="text-xl font-bold mb-4 text-neutral-900">Select your Class</h2>
+                    <img 
+                    id="classImage" 
+                    src="{{ url_for('static', filename='images/wizard.png') }}" 
+                    alt="Class Image" 
+                    class="mb-4" 
+                    style="max-height:300px;"
+                    />
+                    <p id="className" class="text-gray-700"></p>
+                </div>
+            </div>  
+            <div class="row-span-1 row-start-6">
+                <button type="button" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded-full w-[85px]" id="leftArrow">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="row-span-1 row-start-6">
+                <button type="button" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded-full w-[85px]" id="rightArrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <input type="hidden" name="player_class" id="playerClassInput" value="1">
+            <div class="col-span-2 row-span-3 bg-white rounded text-neutral-900 row-start-2">
+                <p>Stats Here</p>
+            </div>
+            <div class="col-span-2 row-start-5">
+                <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded">
+                  Start Game
+                </button>
+            </div>
+        </form>
       </div>
-      <!-- Form now submits to the '/start' route -->
-      <form action="{{ url_for('start') }}" method="POST" class="space-y-4">
-          <!-- Input for the player's name -->
-          <input 
-              type="text" 
-              name="player_name" 
-              placeholder="Your Name" 
-              required
-              class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600"
-          />
-          
-          <!-- Radio buttons for class selection -->
-          <div class="mt-4">
-              <p class="font-medium">Select Your Class:</p>
-              <label class="inline-flex items-center mr-4">
-                  <input type="radio" name="player_class" value="1" required class="form-radio">
-                  <span class="ml-2">Wizard</span>
-              </label>
-              <label class="inline-flex items-center mr-4">
-                  <input type="radio" name="player_class" value="2" class="form-radio">
-                  <span class="ml-2">Swordsman</span>
-              </label>
-              <label class="inline-flex items-center">
-                  <input type="radio" name="player_class" value="3" class="form-radio">
-                  <span class="ml-2">Ranger</span>
-              </label>
-          </div>
-          
-          <button 
-              type="submit"
-              class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-          >
-              Start Game
-          </button>
-      </form>
+<!-- JavaScript to handle class selection -->
+<script>
+    // Array of classes with display names and image URLs.
+    const classes = [
+      { name: "Swordsman", image: "{{ url_for('static', filename='images/swordsman.png') }}" },
+      { name: "Wizard",    image: "{{ url_for('static', filename='images/wizard.png') }}" },
+      { name: "Ranger",    image: "{{ url_for('static', filename='images/ranger.png') }}" }
+    ];
+  
+    // Map the array index to the server's expected values:
+    // Index 0: Swordsman -> "2"
+    // Index 1: Wizard    -> "1"
+    // Index 2: Ranger    -> "3"
+    const serverMapping = ["2", "1", "3"];
+  
+    // Set the initial selection index (defaulting to Wizard at index 1)
+    let selectedIndex = 1;
+  
+    // Function to update the class image, name, and hidden input field.
+    function updateClassDisplay() {
+      const classImage = document.getElementById('classImage');
+      const className = document.getElementById('className');
+      const playerClassInput = document.getElementById('playerClassInput');
+  
+      const currentClass = classes[selectedIndex];
+      classImage.src = currentClass.image;
+      className.textContent = currentClass.name;
+      // Update the hidden input with the value expected by the server.
+      playerClassInput.value = serverMapping[selectedIndex];
+    }
+  
+    // Event listeners for the arrow buttons.
+    document.getElementById('leftArrow').addEventListener('click', function() {
+      // Cycle backwards (with wrapping)
+      selectedIndex = (selectedIndex - 1 + classes.length) % classes.length;
+      updateClassDisplay();
+    });
+  
+    document.getElementById('rightArrow').addEventListener('click', function() {
+      // Cycle forwards (with wrapping)
+      selectedIndex = (selectedIndex + 1) % classes.length;
+      updateClassDisplay();
+    });
+  
+    // Initialize the display on page load.
+    updateClassDisplay();
+  </script> 
     </div>
   </div>
   

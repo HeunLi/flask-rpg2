@@ -25,31 +25,31 @@
     {% endif %}
     <div class="container top-0 left-0 w-full h-full flex flex-col items-center justify-center">
         <div class="grid grid-cols-3 gap-4">
-            <div class="...">
-                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
-                    Forest
-                </button>
-            </div>
-            <div class="...">
-                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
-                    Mountain
-                </button>
-            </div>
+			<div>
+				<button onclick="window.location.href='{{ url_for('battle') }}?location=Forest'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+					Forest
+				</button>
+			</div>
+			<div>
+				<button onclick="window.location.href='{{ url_for('battle') }}?location=Mountains'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+					Mountain
+				</button>
+			</div>
             <div class="...">
                 <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
                     Merchant
                 </button>
             </div>
-            <div class="...">
-                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
-                    Cave
-                </button>
-            </div>
-            <div class="...">
-                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
-                    Swamp
-                </button>
-            </div>
+			<div>
+				<button onclick="window.location.href='{{ url_for('battle') }}?location=Cave'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+					Cave
+				</button>
+			</div>
+			<div>
+				<button onclick="window.location.href='{{ url_for('battle') }}?location=Swamp'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+					Swamp
+				</button>
+			</div>
             <div class="...">
                 <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
                     Bag
