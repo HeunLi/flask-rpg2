@@ -1,12 +1,11 @@
 {
-
     "class": "Swordsman",
-    "HP": 25,
-    "ATK": 5,
-    "DEF": 6,
-    "LVL": 1,
-    "EXP": 0,
-    "MAX_HP": 25,
+    "HP": 33,
+    "ATK": 6.0,
+    "DEF": 7.0,
+    "LVL": 2,
+    "EXP": 100,
+    "MAX_HP": 35.0,
     "inventory": {
         "weapons": [
             {
@@ -30,5 +29,5 @@
         "ATK": 2
     },
     "gold": 100,
-    "username": "Qwerty"
+    "username": "Spring Valley"
 }
