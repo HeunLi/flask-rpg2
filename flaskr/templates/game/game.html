@@ -44,10 +44,7 @@
 				</button>
 			</div>
 			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
+				<button id="merchantButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
 					Merchant
 				</button>
 			</div>
@@ -83,4 +80,7 @@
 		Quit
 	</button>
 </div>
-{% include "inventory_modal.html" %} {% endblock %}
+{% include "inventory_modal.html" %} 
+{% include "merchant_modal.html" %}
+
+{% endblock %}

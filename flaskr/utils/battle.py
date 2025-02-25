@@ -271,6 +271,8 @@ def add_experience(player, amount):
             # Increase stats on level up
             player["MAX_HP"] += 5.0
             player["HP"] = player["MAX_HP"]
+            player["MAX_HP"] += 5.0
+            player["HP"] = player["MAX_HP"]
             player["ATK"] += 1.0
             player["DEF"] += 1.0
 

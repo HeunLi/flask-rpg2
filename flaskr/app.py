@@ -18,6 +18,71 @@ app.secret_key = "your_secret_key"
 
 global player
 player = {}
+# Define shop items (this can be made dynamic if needed)
+SHOP_ITEMS = [
+    {"name": "Iron Sword", "ATK": 5.0, "cost": 50, "type": "weapon"},
+    {"name": "Health Potion", "heal": 25, "cost": 30, "type": "item"},
+]
+
+
+@app.route("/merchant/buy_items")
+def merchant_buy_items():
+    """Return the list of items available for purchase."""
+    return jsonify(SHOP_ITEMS)
+
+
+@app.route("/merchant/buy", methods=["POST"])
+def merchant_buy():
+    player = load_player()
+    item_index = request.form.get("item_index")
+    try:
+        idx = int(item_index) - 1
+        if idx < 0 or idx >= len(SHOP_ITEMS):
+            return jsonify({"error": "Invalid item selection."}), 400
+        selected = SHOP_ITEMS[idx]
+        if player["gold"] >= selected["cost"]:
+            player["gold"] -= selected["cost"]
+            if selected["type"] == "weapon":
+                player["inventory"]["weapons"].append(
+                    {"name": selected["name"], "ATK": selected["ATK"]}
+                )
+            elif selected["type"] == "item":
+                player["inventory"]["items"].append({"name": selected["name"]})
+            save_player(player)
+            return jsonify({"message": f"Purchased {selected['name']}!"})
+        else:
+            return jsonify({"error": "Not enough gold!"}), 400
+    except ValueError:
+        return jsonify({"error": "Invalid input."}), 400
+
+
+@app.route("/merchant/sell", methods=["POST"])
+def merchant_sell():
+    player = load_player()
+    sell_type = request.form.get("sell_type")  # expects 'weapon' or 'item'
+    item_index = request.form.get("item_index")
+    if sell_type not in ["weapon", "item"]:
+        return jsonify({"error": "Invalid sell type."}), 400
+    try:
+        idx = int(item_index) - 1
+        if sell_type == "weapon":
+            items = player["inventory"]["weapons"]
+            if idx < 0 or idx >= len(items):
+                return jsonify({"error": "Invalid selection."}), 400
+            sold_item = items.pop(idx)
+            player["gold"] += 10  # fixed sell price for weapons
+            save_player(player)
+            return jsonify({"message": f"Sold {sold_item['name']} for 10 gold."})
+        elif sell_type == "item":
+            items = player["inventory"]["items"]
+            if idx < 0 or idx >= len(items):
+                return jsonify({"error": "Invalid selection."}), 400
+            sold_item = items.pop(idx)
+            player["gold"] += 5  # fixed sell price for items
+            save_player(player)
+            return jsonify({"message": f"Sold {sold_item['name']} for 5 gold."})
+    except ValueError:
+        return jsonify({"error": "Invalid input."}), 400
 
 
 @app.route("/")
@@ -316,8 +381,10 @@ def use_item():
             return jsonify({"error": "Invalid item index"}), 400
         item = items.pop(idx)
         if item["name"] in ["Small Potion", "Health Potion"]:
+            heal_amount = int(player["MAX_HP"] * item["heal"])  # Convert to integer
             heal_amount = int(player["MAX_HP"] * item["heal"])
             old_hp = player["HP"]
+            player["HP"] = min(player["HP"] + heal_amount, player["MAX_HP"])
             player["HP"] = min(player["HP"] + heal_amount, player["MAX_HP"])
             save_player(player)
             return jsonify(
