@@ -93,7 +93,7 @@
 			if (enemyHP < 0) enemyHP = 0;
 			document.getElementById("enemyHP").innerText = "HP: " + enemyHP;
 
-			// If enemy HP reaches 0, redirect player to game.html
+			// If enemy HP reaches 0, redirect player to explore.html instead of game.html
 			if (enemyHP === 0) {
 				document.getElementById("enemyImg").classList.remove("animate__headShake");
 				void enemyImg.offsetWidth;
@@ -102,7 +102,8 @@
 					"battleMessage"
 				).innerText = `${data.enemy.name} has been defeated!`;
 				setTimeout(() => {
-					window.location.href = "{{ url_for('game') }}";
+					// Redirect to explore with the current location parameter
+					window.location.href = "{{ url_for('explore') }}?location={{ location }}";
 				}, 2000); // 2-second delay before redirecting
 			}
 		}
@@ -123,7 +124,8 @@
 		// If battle is over, redirect automatically
 		if (data.battle_over) {
 			setTimeout(() => {
-				window.location.href = "{{ url_for('game') }}";
+				// Redirect to explore with the current location parameter
+				window.location.href = "{{ url_for('explore') }}?location={{ location }}";
 			}, 1000);
 		}
 	}
