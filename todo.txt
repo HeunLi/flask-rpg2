@@ -1,10 +1,11 @@
-1. Explore, Sleep, page/functionality
-2. Battle Flow
-3. Battle Animation
-4. Battle Character
-5. Video Background on Game Start Menu
-6. Exit Function?
-7. Close Area after defeating boss
-8. Stats on choosing a class
-9. UI Improvements
-10. When Leveling up add a popup with increased stats
+1. Explore, Sleep, page/functionality - Niel
+2. Battle Flow - John
+3. Battle Animation - John
+4. Battle Character - John
+5. Video Background on Game Start Menu - xxx
+6. Exit Function? - xxx
+7. Close Area after defeating boss - Niel
+8. Stats on choosing a class - Niel
+9. UI Improvements - xxx
+10. When Leveling up add a popup with increased stats - xxx
+11. test
