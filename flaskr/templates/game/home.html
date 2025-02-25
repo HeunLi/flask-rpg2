@@ -29,7 +29,13 @@
 </div>
 
 <div class="hidden" id="transitionVideo">
-	<video width="100%" id="videoElement" class="mx-auto h-screen">
+	<video
+		width="100%"
+		id="videoElement"
+		class="mx-auto h-screen"
+		style="filter: hue-rotate(180deg)"
+		autoplay
+	>
 		<source
 			src="{{ url_for('static', filename='images/transition.mp4') }}"
 			type="video/mp4"
@@ -94,7 +100,7 @@
 			videoElement.pause();
 			videoElement.currentTime = 0;
 			videoElement.onended();
-		}, 2000);
+		}, 2500);
 
 		const startButton = document.getElementById("startButton");
 		const playerExists = startButton.dataset.playerExists === "true";
@@ -102,6 +108,7 @@
 		const startMenu = document.getElementById("startMenu");
 		const storyScene = document.getElementById("storyScene");
 		startMenu.classList.remove("flex");
+
 		startMenu.classList.add("hidden");
 
 		videoElement.onended = function () {

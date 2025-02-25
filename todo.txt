@@ -1,12 +1,14 @@
-1. Explore, Sleep, page/functionality - Niel
+1. Explore, Sleep, page/functionality - ✅
 2. Battle Flow - John
 3. Battle Animation - John
 4. Battle Character - John
 5. Video Background on Game Start Menu - xxx
 6. Exit Function? - xxx
-7. Close Area after defeating boss - Niel
-8. Stats on choosing a class - Niel
+7. Close Area after defeating boss - ✅
+8. Stats on choosing a class - ✅
 9. UI Improvements - xxx
 10. When Leveling up add a popup with increased stats - xxx
 11. Add a paragraph by paragraph delay on story scene
 12. ENEMY DROPS
+13. Change Transition to orange colors - ✅
+14. revamp UI of game.html
