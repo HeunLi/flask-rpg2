@@ -1,0 +1,31 @@
+{
+    "defeated_enemies": {
+        "Mountains": [
+            "Tik-tik"
+        ]
+    },
+    "visited_areas": [
+        "Mountains"
+    ],
+    "current_battle": {
+        "enemy": {
+            "name": "Tik-tik",
+            "HP": 0,
+            "ATK": 5,
+            "DEF": 5,
+            "EXP_DROP": 100,
+            "DROPS": [
+                {
+                    "name": "Dark Essence",
+                    "type": "item"
+                },
+                {
+                    "name": "Shadow Bow",
+                    "type": "weapon",
+                    "ATK": 4
+                }
+            ]
+        },
+        "area": "Mountains"
+    }
+}
