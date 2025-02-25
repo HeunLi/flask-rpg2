@@ -1,35 +1,33 @@
 {
-    "ATK": 7.0,
-    "DEF": 5.0,
-    "EXP": 0,
+    "class": "Swordsman",
     "HP": 25.0,
-    "LVL": 2,
-    "class": "Wizard",
-    "equipped_weapon": {
-        "ATK": 2.0,
-        "name": "Basic Staff"
-    },
-    "gold": 100,
+    "ATK": 5.0,
+    "DEF": 6.0,
+    "LVL": 1,
+    "EXP": 0,
+    "MAX_HP": 25.0,
     "inventory": {
-        "items": [
-            {
-                "heal": 0.25,
-                "name": "Small Potion"
-            },
-            {
-                "heal": 0.5,
-                "name": "Health Potion"
-            },
-            {
-                "name": "Healing Herb"
-            }
-        ],
         "weapons": [
             {
-                "ATK": 2.0,
-                "name": "Basic Staff"
+                "name": "Basic Sword",
+                "ATK": 2.0
+            }
+        ],
+        "items": [
+            {
+                "name": "Small Potion",
+                "heal": 0.25
+            },
+            {
+                "name": "Health Potion",
+                "heal": 0.5
             }
         ]
     },
-    "max_HP": 25.0
+    "equipped_weapon": {
+        "name": "Basic Sword",
+        "ATK": 2.0
+    },
+    "gold": 100,
+    "username": "qwerty"
 }

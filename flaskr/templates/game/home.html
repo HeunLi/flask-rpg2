@@ -9,6 +9,8 @@
 
 	<button
 		onclick="startGame()"
+		id="startButton"
+		data-playerExists="{{ 'true' if player else 'false' }}"
 		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
 	>
 		Start Game
@@ -32,10 +34,21 @@
 
 <div class="relative hidden" id="storyScene">
 	<h1 class="text-4xl pixel_font">Story Scene here!</h1>
+
+	<button onclick="window.location.href='start'">Start Adventure</button>
 </div>
 
 <script>
 	function startGame() {
+		const startButton = document.getElementById("startButton");
+		const playerExists = startButton.dataset.playerExists === "true";
+
+		if (playerExists) {
+			// Redirect to game page if player exists
+			window.location.href = "{{ url_for('game') }}";
+			return;
+		}
+
 		const startMenu = document.getElementById("startMenu");
 		const storyScene = document.getElementById("storyScene");
 		const transitionVideo = document.getElementById("transitionVideo");
