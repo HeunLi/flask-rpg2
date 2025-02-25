@@ -1,7 +1,10 @@
 <!-- templates/home.html -->
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<div class="start_bg flex flex-col items-center justify-center" id="startMenu">
+<div
+	class="start_bg hidden flex-col items-center justify-center fadeIn"
+	id="startMenu"
+>
 	<div class="text-center space-y-1">
 		<h1 class="text-5xl font-bold">Adventure Game</h1>
 		<h2 class="text-4xl font-medium text-neutral-300">Welcome Player!</h2>
@@ -16,6 +19,7 @@
 		Start Game
 	</button>
 	<button
+		onclick="window.close()"
 		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
 	>
 		Exit
@@ -32,7 +36,7 @@
 	</video>
 </div>
 
-<div class="relative hidden" id="storyScene">
+<div class="relative block fadeIn" id="storyScene">
 	<h1 class="text-4xl pixel_font">Story Scene here!</h1>
 
 	<button onclick="window.location.href='start'">Start Adventure</button>
