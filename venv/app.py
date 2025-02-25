@@ -55,7 +55,9 @@ def get_class_data(choice):
 
 @app.route('/')
 def home():
-    return render_template('game/home.html')
+    player_name = session.get('player_name', 'Adventurer')
+    player_class = session.get('player_class')
+    return render_template('game/home.html', player_name=player_name, player_class=player_class)
 
 @app.route('/start', methods=['GET', 'POST'])
 def start():
