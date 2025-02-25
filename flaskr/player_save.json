@@ -1,11 +1,11 @@
 {
     "class": "Swordsman",
-    "HP": 51,
-    "ATK": 8.0,
-    "DEF": 9.0,
-    "LVL": 4,
-    "EXP": 300,
-    "MAX_HP": 55.0,
+    "HP": 25,
+    "ATK": 5,
+    "DEF": 6,
+    "LVL": 1,
+    "EXP": 0,
+    "MAX_HP": 25,
     "inventory": {
         "weapons": [
             {
@@ -29,5 +29,5 @@
         "ATK": 2
     },
     "gold": 100,
-    "username": "Borot"
+    "username": "Qwerty"
 }
