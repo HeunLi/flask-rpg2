@@ -3,25 +3,25 @@ def get_class_data(choice):
     classes = {
         "1": {
             "class": "Wizard",
-            "HP": 20.0,
-            "ATK": 6.0,
-            "DEF": 4.0,
+            "HP": 20,
+            "ATK": 6,
+            "DEF": 4,
             "LVL": 1,
             "EXP": 0,
         },
         "2": {
             "class": "Swordsman",
-            "HP": 25.0,
-            "ATK": 5.0,
-            "DEF": 6.0,
+            "HP": 25,
+            "ATK": 5,
+            "DEF": 6,
             "LVL": 1,
             "EXP": 0,
         },
         "3": {
             "class": "Ranger",
-            "HP": 22.0,
-            "ATK": 5.5,
-            "DEF": 5.0,
+            "HP": 22,
+            "ATK": 5,
+            "DEF": 5,
             "LVL": 1,
             "EXP": 0,
         },
@@ -31,11 +31,11 @@ def get_class_data(choice):
         player["MAX_HP"] = player["HP"]
         # Set up a default inventory with a basic weapon and potions.
         if choice == "1":
-            default_weapon = {"name": "Basic Staff", "ATK": 2.0}
+            default_weapon = {"name": "Basic Staff", "ATK": 2}
         elif choice == "2":
-            default_weapon = {"name": "Basic Sword", "ATK": 2.0}
+            default_weapon = {"name": "Basic Sword", "ATK": 2}
         else:
-            default_weapon = {"name": "Basic Bow", "ATK": 2.0}
+            default_weapon = {"name": "Basic Bow", "ATK": 2}
         player["inventory"] = {
             "weapons": [default_weapon],
             "items": [

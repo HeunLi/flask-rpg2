@@ -109,43 +109,34 @@ def battle_attack():
         player, enemy, weapon_bonus
     )
     enemy["HP"] -= final_damage
-    message = f"You attacked {enemy['name']} for {final_damage:.1f} damage! "
+    message = f"You attacked {enemy['name']} for {final_damage} damage!"
 
     # Handle enemy defeat
     if enemy["HP"] <= 0:
-        message += f"{enemy['name']} is defeated!"
+        enemy["HP"] = 0  # Ensure enemy HP does not go negative
+        message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
-
-        # Process drops
-        drop = random.choice(enemy["DROPS"])
-        if drop["type"] == "weapon":
-            player["inventory"]["weapons"].append(
-                {"name": drop["name"], "ATK": drop["ATK"]}
-            )
-            message += f" Enemy dropped a {drop['name']} (Weapon, ATK: {drop['ATK']}). "
-        else:
-            player["inventory"]["items"].append({"name": drop["name"]})
-            message += f" Enemy dropped a {drop['name']} (Item). "
-
-        add_experience(player, enemy["EXP_DROP"])
-        world_state.pop("current_battle", None)  # Clear battle state
+        
+        # Save progress
         save_world(world_state)
         save_player(player)
 
+        # Remove enemy from battle state
+        world_state.pop("current_battle", None)
+        
         return jsonify(
-            {"message": message, "battle_over": True, "player": player, "enemy": enemy}
+            {
+                "message": message,
+                "battle_over": True,  # Mark battle as over
+                "player": player,
+                "enemy": enemy,
+            }
         )
 
     # Process enemy counter-attack
-    if enemy["name"].lower() == "big boss":
-        # Boss logic here...
-        pass
-    else:
-        raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-            enemy, player
-        )
-        player["HP"] -= final_damage
-        message += f"{enemy['name']} counterattacked for {final_damage:.1f} damage! "
+    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(enemy, player)
+    player["HP"] -= final_damage
+    message += f" {enemy['name']} counterattacked for {final_damage:.1f} damage!"
 
     # Check player defeat
     if player["HP"] <= 0:
@@ -167,6 +158,7 @@ def battle_attack():
     )
 
 
+
 @app.route("/battle/defend", methods=["POST"])
 def battle_defend():
     player = load_player()
@@ -179,7 +171,7 @@ def battle_defend():
     if not (player and enemy and area):
         return jsonify({"error": "Battle state not found"}), 400
 
-    temp_def_bonus = player["DEF"] * 0.5
+    temp_def_bonus = int(player["DEF"] * 0.5)  # Convert to integer
     player["DEF"] += temp_def_bonus
     message = "You brace yourself and boost your defense! "
 
@@ -187,8 +179,9 @@ def battle_defend():
     raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
         enemy, player
     )
+    final_damage = int(final_damage)
     player["HP"] -= final_damage
-    message += f"{enemy['name']} attacked for {final_damage:.1f} damage! "
+    message += f"{enemy['name']} attacked for {final_damage} damage! "
 
     # Remove temporary defense bonus
     player["DEF"] -= temp_def_bonus
@@ -318,7 +311,7 @@ def use_item():
             return jsonify({"error": "Invalid item index"}), 400
         item = items.pop(idx)
         if item["name"] in ["Small Potion", "Health Potion"]:
-            heal_amount = player["max_HP"] * item["heal"]
+            heal_amount = int(player["max_HP"] * item["heal"])  # Convert to integer
             old_hp = player["HP"]
             player["HP"] = min(player["HP"] + heal_amount, player["max_HP"])
             save_player(player)
