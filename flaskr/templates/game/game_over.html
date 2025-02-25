@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block title %}Game Over{% endblock %} {% block
+content %}
+<div class="flex flex-col items-center justify-center h-screen bg-neutral-900">
+	<div class="text-center space-y-6">
+		<h1 class="text-6xl font-bold text-red-600 mb-4">Game Over</h1>
+		<p class="text-2xl text-gray-300 mb-8">
+			Your adventure has come to an end...
+		</p>
+
+		<button
+			onclick="resetGame()"
+			class="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out"
+		>
+			Reset Game
+		</button>
+	</div>
+</div>
+
+<script>
+	function resetGame() {
+		fetch('{{ url_for("reset_game") }}', {
+			method: "POST",
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					window.location.href = '{{ url_for("home") }}';
+				} else {
+					alert("Error resetting game: " + data.error);
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				alert("An error occurred while resetting the game.");
+			});
+	}
+</script>
+{% endblock %}

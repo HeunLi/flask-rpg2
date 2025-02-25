@@ -260,7 +260,7 @@ def calculate_damage(attacker, defender, weapon_bonus=0.0):
     # Raw damage before defense reduction
     raw_damage = base_attack + (base_attack * multiplier)
 
-    # Each point in DEF reduces raw damage by 10%
+    # Each point in DEF reduces raw damage by 10    %
     damage_reduction = raw_damage * (defender["DEF"] / 10)
 
     # Final damage cannot be negative
