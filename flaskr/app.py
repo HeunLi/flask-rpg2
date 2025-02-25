@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import random
+import os
 
 # Utils
 from utils.world import (
@@ -21,6 +22,7 @@ player = {}
 
 @app.route("/")
 def home():
+    player = load_player()
     return render_template("game/home.html", player=player)
 
 
@@ -46,7 +48,24 @@ def start():
 @app.route("/game")
 def game():
     player = load_player()
+
+    if not player["HP"] > 0:
+        return render_template("game/game_over.html")
+
     return render_template("game/game.html", player=player)
+
+
+@app.route("/reset-game", methods=["POST"])
+def reset_game():
+    try:
+        # Delete save files if they exist
+        if os.path.exists("player_save.json"):
+            os.remove("player_save.json")
+        if os.path.exists("world_save.json"):
+            os.remove("world_save.json")
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
 
 
 # -------------------------------------------
