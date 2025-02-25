@@ -269,14 +269,14 @@ def add_experience(player, amount):
             player["EXP"] -= exp_needed
 
             # Increase stats on level up
-            player["max_HP"] += 5.0
-            player["HP"] = player["max_HP"]
+            player["MAX_HP"] += 5.0
+            player["HP"] = player["MAX_HP"]
             player["ATK"] += 1.0
             player["DEF"] += 1.0
 
             print(f"\nLevel Up! You are now level {player['LVL']}!")
             print("Stats increased:")
-            print(f"HP: +5.0 (Now {player['max_HP']:.1f})")
+            print(f"HP: +5.0 (Now {player['MAX_HP']:.1f})")
             print(f"ATK: +1.0 (Now {player['ATK']:.1f})")
             print(f"DEF: +1.0 (Now {player['DEF']:.1f})\n")
         else:

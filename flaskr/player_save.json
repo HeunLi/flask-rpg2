@@ -1,34 +1,34 @@
 {
-    "ATK": 5.5,
-    "DEF": 5.0,
-    "EXP": 0,
-    "HP": -6.625,
+    "class": "Swordsman",
+    "HP": 25,
+    "ATK": 5,
+    "DEF": 6,
     "LVL": 1,
-    "MAX_HP": 22.0,
-    "class": "Ranger",
-    "equipped_weapon": {
-        "ATK": 2.0,
-        "name": "Basic Bow"
-    },
-    "gold": 100,
+    "EXP": 0,
+    "MAX_HP": 25,
     "inventory": {
-        "items": [
-            {
-                "heal": 0.25,
-                "name": "Small Potion"
-            },
-            {
-                "heal": 0.5,
-                "name": "Health Potion"
-            }
-        ],
         "weapons": [
             {
-                "ATK": 2.0,
-                "name": "Basic Bow"
+                "name": "Basic Sword",
+                "ATK": 2
+            }
+        ],
+        "items": [
+            {
+                "name": "Small Potion",
+                "heal": 0.25
+            },
+            {
+                "name": "Health Potion",
+                "heal": 0.5
             }
         ]
     },
+    "equipped_weapon": {
+        "name": "Basic Sword",
+        "ATK": 2
+    },
+    "gold": 100,
     "username": "Spring Valley"
 }
 

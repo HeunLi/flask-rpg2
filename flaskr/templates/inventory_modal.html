@@ -47,7 +47,7 @@
 			.then((response) => response.json())
 			.then((data) => {
 				let content = `<p>Gold: ${data.gold}</p>`;
-				content += `<p>HP: ${data.HP} / ${data.max_HP}</p>`;
+				content += `<p>HP: ${data.HP} / ${data.MAX_HP}</p>`;
 				content += `<p>Equipped Weapon: ${
 					data.equipped_weapon
 						? data.equipped_weapon.name +
