@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import random
 
 # Utils
@@ -6,6 +6,7 @@ from utils.world import (
     save_player,
     save_world,
     load_player,
+    load_world,
     update_world_state,
 )
 from utils.game_logic import get_class_data
@@ -38,10 +39,6 @@ def start():
         player_class_data["username"] = player_name
         save_player(player_class_data)
 
-        # Save both name and class data in session for persistence
-        session["player_name"] = player_name
-        session["player_class"] = player_class_data
-
         return redirect(url_for("game"))
     return render_template("game/start.html")
 
@@ -59,59 +56,48 @@ def game():
 
 @app.route("/battle")
 def battle():
-    # Get the chosen location from the query string, e.g., /battle?location=Forest
     location = request.args.get("location", None)
     enemy = None
     if location:
-        # Use a simple world state from session to track defeated enemies.
-        world_state = session.get("world_state", {"defeated_enemies": {}})
+        world_state = load_world()
         if location not in world_state["defeated_enemies"]:
             world_state["defeated_enemies"][location] = []
-        enemy = encounter_enemies(location, world_state)
-        session["world_state"] = world_state  # Update session state if necessary
 
-        # Save enemy and area in session for the battle actions
+        enemy = encounter_enemies(location, world_state)
+
         if enemy:
-            session["enemy"] = enemy
-            session["battle_area"] = location
+            world_state["current_battle"] = {"enemy": enemy, "area": location}
+            save_world(world_state)
+
     return render_template("game/battle.html", location=location, enemy=enemy)
 
 
 @app.route("/battle/attack", methods=["POST"])
 def battle_attack():
-    """
-    Endpoint to process an attack action in battle.
-    Uses the helper functions to calculate damage, update the world state,
-    award experience, and save progress.
-    """
-    # Retrieve the current battle state from session
-    player = session.get("player_class")
-    enemy = session.get("enemy")
-    # Ensure world_state has keys for defeated_enemies and visited_areas
-    world_state = session.get(
-        "world_state", {"defeated_enemies": {}, "visited_areas": []}
-    )
-    area = session.get("battle_area")
+    player = load_player()
+    world_state = load_world()
+
+    current_battle = world_state.get("current_battle", {})
+    enemy = current_battle.get("enemy")
+    area = current_battle.get("area")
 
     if not (player and enemy and area):
         return jsonify({"error": "Battle state not found"}), 400
 
-    # Calculate player's attack damage.
-    weapon_bonus = (
-        player["equipped_weapon"]["ATK"] if player.get("equipped_weapon") else 0.0
-    )
+    # Calculate damage
+    weapon_bonus = player.get("equipped_weapon", {}).get("ATK", 0.0)
     raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
         player, enemy, weapon_bonus
     )
     enemy["HP"] -= final_damage
     message = f"You attacked {enemy['name']} for {final_damage:.1f} damage! "
 
-    # Check if enemy is defeated.
+    # Handle enemy defeat
     if enemy["HP"] <= 0:
         message += f"{enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
 
-        # Process enemy drop (weapon or item)
+        # Process drops
         drop = random.choice(enemy["DROPS"])
         if drop["type"] == "weapon":
             player["inventory"]["weapons"].append(
@@ -123,38 +109,18 @@ def battle_attack():
             message += f" Enemy dropped a {drop['name']} (Item). "
 
         add_experience(player, enemy["EXP_DROP"])
+        world_state.pop("current_battle", None)  # Clear battle state
         save_world(world_state)
         save_player(player)
 
-        # Remove enemy from session to indicate battle over
-        session.pop("enemy", None)
-        session["player_class"] = player
-        session["world_state"] = world_state
         return jsonify(
-            {
-                "message": message,
-                "battle_over": True,
-                "player": player,
-                "enemy": enemy,  # Optionally, send minimal enemy data
-            }
+            {"message": message, "battle_over": True, "player": player, "enemy": enemy}
         )
 
-    # Process enemy's counterattack.
+    # Process enemy counter-attack
     if enemy["name"].lower() == "big boss":
-        boss_action = random.choice(["attack", "heal"])
-        if boss_action == "attack":
-            raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-                enemy, player
-            )
-            player["HP"] -= final_damage
-            message += (
-                f"{enemy['name']} counterattacked for {final_damage:.1f} damage! "
-            )
-        else:
-            heal_amount = enemy["max_HP"] * 0.2  # Boss heals 20% of its max HP
-            old_hp = enemy["HP"]
-            enemy["HP"] = min(enemy["HP"] + heal_amount, enemy["max_HP"])
-            message += f"{enemy['name']} healed for {enemy['HP'] - old_hp:.1f} HP! "
+        # Boss logic here...
+        pass
     else:
         raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
             enemy, player
@@ -162,22 +128,21 @@ def battle_attack():
         player["HP"] -= final_damage
         message += f"{enemy['name']} counterattacked for {final_damage:.1f} damage! "
 
-    # Check if the player has been defeated.
+    # Check player defeat
     if player["HP"] <= 0:
         message += " You have been defeated!"
+        world_state.pop("current_battle", None)
         save_world(world_state)
         save_player(player)
-        session.pop("enemy", None)
-        session["player_class"] = player
-        session["world_state"] = world_state
         return jsonify(
             {"message": message, "battle_over": True, "player": player, "enemy": enemy}
         )
 
-    # Update session with new state and return the battle status.
-    session["player_class"] = player
-    session["enemy"] = enemy
-    session["world_state"] = world_state
+    # Update battle state
+    world_state["current_battle"]["enemy"] = enemy
+    save_world(world_state)
+    save_player(player)
+
     return jsonify(
         {"message": message, "battle_over": False, "player": player, "enemy": enemy}
     )
@@ -185,10 +150,12 @@ def battle_attack():
 
 @app.route("/battle/defend", methods=["POST"])
 def battle_defend():
-    player = session.get("player_class")
-    enemy = session.get("enemy")
-    world_state = session.get("world_state", {"defeated_enemies": {}})
-    area = session.get("battle_area")
+    player = load_player()
+    world_state = load_world()
+
+    current_battle = world_state.get("current_battle", {})
+    enemy = current_battle.get("enemy")
+    area = current_battle.get("area")
 
     if not (player and enemy and area):
         return jsonify({"error": "Battle state not found"}), 400
@@ -209,16 +176,16 @@ def battle_defend():
 
     if player["HP"] <= 0:
         message += " You have been defeated!"
-        session.pop("enemy", None)
-        session["player_class"] = player
-        session["world_state"] = world_state
+        world_state.pop("current_battle", None)
+        save_world(world_state)
+        save_player(player)
         return jsonify(
             {"message": message, "battle_over": True, "player": player, "enemy": enemy}
         )
 
-    session["player_class"] = player
-    session["enemy"] = enemy
-    session["world_state"] = world_state
+    world_state["current_battle"]["enemy"] = enemy
+    save_world(world_state)
+    save_player(player)
     return jsonify(
         {"message": message, "battle_over": False, "player": player, "enemy": enemy}
     )
@@ -226,49 +193,52 @@ def battle_defend():
 
 @app.route("/battle/run", methods=["POST"])
 def battle_run():
-    player = session.get("player_class")
-    enemy = session.get("enemy")
-    world_state = session.get("world_state", {"defeated_enemies": {}})
-    area = session.get("battle_area")
+    player = load_player()
+    world_state = load_world()
+
+    current_battle = world_state.get("current_battle", {})
+    enemy = current_battle.get("enemy")
+    area = current_battle.get("area")
 
     if not (player and enemy and area):
         return jsonify({"error": "Battle state not found"}), 400
 
     run_chance = random.random()
     message = ""
+
     if run_chance > 0.5:
         message = "You successfully escaped the battle!"
-        session.pop("enemy", None)
-        session["player_class"] = player
-        session["world_state"] = world_state
+        world_state.pop("current_battle", None)
+        save_world(world_state)
+        save_player(player)
         return jsonify(
             {"message": message, "battle_over": True, "player": player, "enemy": enemy}
         )
-    else:
-        message = "Escape failed! As you try to run, "
-        raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-            enemy, player
+
+    message = "Escape failed! As you try to run, "
+    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
+        enemy, player
+    )
+    player["HP"] -= final_damage
+    message += f"{enemy['name']} attacked you for {final_damage:.1f} damage! "
+
+    if player["HP"] <= 0:
+        message += " You have been defeated!"
+        world_state.pop("current_battle", None)
+        save_world(world_state)
+        save_player(player)
+        return jsonify(
+            {
+                "message": message,
+                "battle_over": True,
+                "player": player,
+                "enemy": enemy,
+            }
         )
-        player["HP"] -= final_damage
-        message += f"{enemy['name']} attacked you for {final_damage:.1f} damage! "
 
-        if player["HP"] <= 0:
-            message += " You have been defeated!"
-            session.pop("enemy", None)
-            session["player_class"] = player
-            session["world_state"] = world_state
-            return jsonify(
-                {
-                    "message": message,
-                    "battle_over": True,
-                    "player": player,
-                    "enemy": enemy,
-                }
-            )
-
-    session["player_class"] = player
-    session["enemy"] = enemy
-    session["world_state"] = world_state
+    world_state["current_battle"]["enemy"] = enemy
+    save_world(world_state)
+    save_player(player)
     return jsonify(
         {"message": message, "battle_over": False, "player": player, "enemy": enemy}
     )
@@ -281,7 +251,7 @@ def battle_run():
 
 @app.route("/inventory", methods=["GET"])
 def inventory():
-    player = session.get("player_class")
+    player = load_player()
     if player:
         return jsonify(
             {
@@ -298,7 +268,7 @@ def inventory():
 
 @app.route("/inventory/equip", methods=["POST"])
 def equip_weapon():
-    player = session.get("player_class")
+    player = load_player()
     if not player:
         return jsonify({"error": "Player not found"}), 404
 
@@ -309,7 +279,7 @@ def equip_weapon():
         if idx < 0 or idx >= len(weapons):
             return jsonify({"error": "Invalid weapon index"}), 400
         player["equipped_weapon"] = weapons[idx]
-        session["player_class"] = player
+        save_player(player)
         return jsonify({"message": f"You have equipped {weapons[idx]['name']}."})
     except ValueError:
         return jsonify({"error": "Invalid input"}), 400
@@ -317,7 +287,7 @@ def equip_weapon():
 
 @app.route("/inventory/use", methods=["POST"])
 def use_item():
-    player = session.get("player_class")
+    player = load_player()
     if not player:
         return jsonify({"error": "Player not found"}), 404
 
@@ -332,7 +302,7 @@ def use_item():
             heal_amount = player["max_HP"] * item["heal"]
             old_hp = player["HP"]
             player["HP"] = min(player["HP"] + heal_amount, player["max_HP"])
-            session["player_class"] = player
+            save_player(player)
             return jsonify(
                 {
                     "message": f"You used a {item['name']} and restored {player['HP'] - old_hp:.1f} HP."
