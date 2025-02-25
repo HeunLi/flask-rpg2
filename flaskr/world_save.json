@@ -2,31 +2,12 @@
     "defeated_enemies": {
         "Forest": [
             "Kapri",
-            "Diwata"
+            "Diwata",
+            "Tikbalang"
         ]
     },
     "visited_areas": [
         "Forest"
     ],
-    "current_battle": {
-        "enemy": {
-            "name": "Diwata",
-            "HP": 0,
-            "ATK": 5,
-            "DEF": 4,
-            "EXP_DROP": 100,
-            "DROPS": [
-                {
-                    "name": "Healing Herb",
-                    "type": "item"
-                },
-                {
-                    "name": "Nature Staff",
-                    "type": "weapon",
-                    "ATK": 3
-                }
-            ]
-        },
-        "area": "Forest"
-    }
+    "current_battle": {}
 }

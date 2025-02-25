@@ -115,12 +115,17 @@ def start():
 @app.route("/game")
 def game():
     player = load_player()
+    world = load_world()
 
     if player is None:
         return redirect(url_for("start"))
 
     if not player["HP"] > 0:
         return render_template("game/game_over.html")
+
+    # reset current battle state to empty everytime were back at game.html
+    world["current_battle"] = {}
+    save_world(world)
 
     return render_template("game/game.html", player=player)
 
@@ -158,7 +163,7 @@ def explore():
         if enemy is not None:
             world_state["current_battle"] = {"enemy": enemy, "area": location}
             save_world(world_state)
-            return render_template("game/battle.html", location=location, enemy=enemy)
+            return redirect(url_for("game/battle.html", location=location, enemy=enemy))
 
     # if enemy is none meaning area is cleared
     if enemy is None:

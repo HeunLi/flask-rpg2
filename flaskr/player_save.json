@@ -1,11 +1,11 @@
 {
     "class": "Swordsman",
-    "HP": 33,
-    "ATK": 6.0,
-    "DEF": 7.0,
-    "LVL": 2,
-    "EXP": 100,
-    "MAX_HP": 35.0,
+    "HP": 45.0,
+    "ATK": 7.0,
+    "DEF": 8.0,
+    "LVL": 3,
+    "EXP": 0,
+    "MAX_HP": 45.0,
     "inventory": {
         "weapons": [
             {

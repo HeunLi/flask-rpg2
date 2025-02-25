@@ -1,87 +1,139 @@
 <!-- templates/game.html -->
 {% extends "base.html" %} {% block title %}Game{% endblock %} {% block content
 %}
-<div class="container mx-auto p-6 text-center fadeIn">
-	<h1 class="text-3xl font-bold">Welcome, {{ player['username'] }}!</h1>
-	<p class="mt-4">Your adventure begins here...</p>
 
-	{% if player %}
-	<div class="mt-4">
-		<h2 class="text-2xl font-semibold">Class: {{ player["class"] }}</h2>
-		<ul class="mt-2 space-y-1">
-			<li>
-				<strong>HP:</strong> {{ player["HP"] }} (Max: {{
-				player["MAX_HP"] }})
-			</li>
-			<li><strong>ATK:</strong> {{ player["ATK"] }}</li>
-			<li><strong>DEF:</strong> {{ player["DEF"] }}</li>
-			<li><strong>LVL:</strong> {{ player["LVL"] }}</li>
-			<li><strong>EXP:</strong> {{ player["EXP"] }}</li>
-			<li><strong>Gold:</strong> {{ player["gold"] }}</li>
-		</ul>
-	</div>
-	{% else %}
-	<p class="mt-4">No class selected.</p>
-	{% endif %}
-	<div
-		class="container top-0 left-0 w-full h-full flex flex-col items-center justify-center"
+<div class="relative">
+	<h1
+		class="absolute top-5 left-1/2 tranform -translate-x-1/2 pixel_font font-medium text-4xl"
 	>
-		<div class="grid grid-cols-3 gap-4">
-			<div>
-				<button
-					onclick="window.location.href='{{ url_for('explore') }}?location=Forest'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Forest
-				</button>
+		Welcome To <span class="text-amber-400">Spring Village!</span>
+	</h1>
+	<div class="flex justify-center items-center h-screen p-20 gap-5 mt-2">
+		<div class="w-full h-full flex gap-5">
+			<div
+				class="w-1/2 h-full bg-neutral-500/20 rounded-2xl overflow-hidden p-5"
+			>
+				<img
+					src="{{ url_for('static', filename='images/start_bg.jpg') }}"
+					alt="Background"
+					class="w-full h-full object-cover rounded-xl"
+				/>
 			</div>
-			<div>
-				<button
-					onclick="window.location.href='{{ url_for('explore') }}?location=Mountains'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
+
+			<div class="w-1/2 h-full space-y-5">
+				<div
+					class="w-full h-[calc(50%-20px)] bg-neutral-500/20 p-5 rounded-2xl"
 				>
-					Mountain
-				</button>
-			</div>
-			<div class="...">
+					<h1 class="pixel_font text-4xl font-medium text-white">
+						Class Stats -
+						<span class="text-amber-400"
+							>{{ player['class'] }}</span
+						>
+					</h1>
+					<div class="grid grid-cols-2 gap-3 mt-4">
+						<div class="pixel_font text-xl">
+							<span>HP:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['HP'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>MAX HP:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['MAX_HP'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>ATK:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['ATK'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>DEF:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['DEF'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>LVL:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['LVL'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>EXP:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['EXP'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>GOLD:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['gold'] }}</span
+							>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>WEAPON:</span>
+							<span class="text-amber-400 ml-1"
+								>{{ player['equipped_weapon']['name'] }}</span
+							>
+						</div>
+					</div>
+				</div>
+
+				<div class="w-full h-1/2 bg-neutral-500/20 rounded-2xl p-5">
+					<div class="grid grid-cols-4 gap-4 mb-4">
+						<button
+							onclick="window.location.href='{{ url_for('explore') }}?location=Forest'"
+							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+						>
+							Forest
+						</button>
+						<button
+							onclick="window.location.href='{{ url_for('explore') }}?location=Mountains'"
+							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+						>
+							Mountain
+						</button>
+						<button
+							onclick="window.location.href='{{ url_for('explore') }}?location=Cave'"
+							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+						>
+							Cave
+						</button>
+						<button
+							onclick="window.location.href='{{ url_for('explore') }}?location=Swamp'"
+							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+						>
+							Swamp
+						</button>
+					</div>
+
+					<div class="grid grid-cols-2 gap-4">
+						<button
+							id="merchantButton"
+							class="py-3 px-5 w-full h-[120px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+						>
+							Merchant
+						</button>
+						<button
+							class="bagButton py-3 px-5 w-full h-[120px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+						>
+							Inventory
+						</button>
+					</div>
+				</div>
+
 				<button
-					id="merchantButton"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
+					onclick="window.location.href='{{ url_for('home') }}'"
+					class="py-3 px-5 text-2xl font-medium pixel_font bg-red-600 text-white rounded-xl text-center hover:bg-red-700 absolute bottom-3 left-3"
 				>
-					Merchant
-				</button>
-			</div>
-			<div>
-				<button
-					onclick="window.location.href='{{ url_for('explore') }}?location=Cave'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Cave
-				</button>
-			</div>
-			<div>
-				<button
-					onclick="window.location.href='{{ url_for('explore') }}?location=Swamp'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Swamp
-				</button>
-			</div>
-			<div class="...">
-				<button
-					class="bagButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Bag
+					Quit
 				</button>
 			</div>
 		</div>
 	</div>
-	<button
-		onclick="window.location.href='{{ url_for('home') }}'"
-		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-	>
-		Quit
-	</button>
 </div>
 {% include "inventory_modal.html" %} {% include "merchant_modal.html" %} {%
 endblock %}

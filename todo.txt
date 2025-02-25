@@ -6,9 +6,9 @@
 6. Exit Function? - xxx
 7. Close Area after defeating boss - ✅
 8. Stats on choosing a class - ✅
-9. UI Improvements - xxx
+9. UI Improvements - ✅
 10. When Leveling up add a popup with increased stats - xxx
 11. Add a paragraph by paragraph delay on story scene
-12. ENEMY DROPS
+12. ENEMY DROPS - xxx
 13. Change Transition to orange colors - ✅
-14. revamp UI of game.html
+14. revamp UI of game.html - ✅
