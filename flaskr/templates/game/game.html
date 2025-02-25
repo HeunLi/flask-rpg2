@@ -1,89 +1,64 @@
 <!-- templates/game.html -->
-{% extends "base.html" %} {% block title %}Game{% endblock %} {% block content
-%}
-<div class="container mx-auto p-6 text-center">
-	<h1 class="text-3xl font-bold">Welcome, {{ player_name }}!</h1>
-	<p class="mt-4">Your adventure begins here...</p>
+{% extends "base.html" %}
 
-	{% if player_class %}
-	<div class="mt-4">
-		<h2 class="text-2xl font-semibold">
-			Class: {{ player_class["class"] }}
-		</h2>
-		<ul class="mt-2 space-y-1">
-			<li>
-				<strong>HP:</strong> {{ player_class["HP"] }} (Max: {{
-				player_class["max_HP"] }})
-			</li>
-			<li><strong>ATK:</strong> {{ player_class["ATK"] }}</li>
-			<li><strong>DEF:</strong> {{ player_class["DEF"] }}</li>
-			<li><strong>LVL:</strong> {{ player_class["LVL"] }}</li>
-			<li><strong>EXP:</strong> {{ player_class["EXP"] }}</li>
-			<li><strong>Gold:</strong> {{ player_class["gold"] }}</li>
-		</ul>
-	</div>
-	{% else %}
-	<p class="mt-4">No class selected.</p>
-	{% endif %}
-	<div
-		class="container top-0 left-0 w-full h-full flex flex-col items-center justify-center"
-	>
-		<div class="grid grid-cols-3 gap-4">
-			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Forest
-				</button>
-			</div>
-			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Mountain
-				</button>
-			</div>
-			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Merchant
-				</button>
-			</div>
-			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Cave
-				</button>
-			</div>
-			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Swamp
-				</button>
-			</div>
-			<div class="...">
-				<button
-					onclick="window.location.href='{{ url_for('home') }}'"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-				>
-					Bag
-				</button>
-			</div>
-		</div>
-	</div>
-	<button
-		onclick="window.location.href='{{ url_for('home') }}'"
-		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
-	>
-		Quit
-	</button>
+{% block title %}Game{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6 text-center">
+    <h1 class="text-3xl font-bold">Welcome, {{ player_name }}!</h1>
+    <p class="mt-4">Your adventure begins here...</p>
+    
+    {% if player_class %}
+      <div class="mt-4">
+        <h2 class="text-2xl font-semibold">Class: {{ player_class["class"] }}</h2>
+        <ul class="mt-2 space-y-1">
+          <li><strong>HP:</strong> {{ player_class["HP"] }} (Max: {{ player_class["max_HP"] }})</li>
+          <li><strong>ATK:</strong> {{ player_class["ATK"] }}</li>
+          <li><strong>DEF:</strong> {{ player_class["DEF"] }}</li>
+          <li><strong>LVL:</strong> {{ player_class["LVL"] }}</li>
+          <li><strong>EXP:</strong> {{ player_class["EXP"] }}</li>
+          <li><strong>Gold:</strong> {{ player_class["gold"] }}</li>
+        </ul>
+      </div>
+    {% else %}
+      <p class="mt-4">No class selected.</p>
+    {% endif %}
+    <div class="container top-0 left-0 w-full h-full flex flex-col items-center justify-center">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="...">
+                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+                    Forest
+                </button>
+            </div>
+            <div class="...">
+                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+                    Mountain
+                </button>
+            </div>
+            <div class="...">
+                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+                    Merchant
+                </button>
+            </div>
+            <div class="...">
+                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+                    Cave
+                </button>
+            </div>
+            <div class="...">
+                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+                    Swamp
+                </button>
+            </div>
+            <div class="...">
+                <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+                    Bag
+                </button>
+            </div>
+        </div>
+    </div>
+    <button onclick="window.location.href='{{ url_for('home') }}'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+        Quit
+    </button>
 </div>
 {% endblock %}
