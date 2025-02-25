@@ -1,32 +1,66 @@
 <!-- templates/home.html -->
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="start_bg flex flex-col items-center justify-center" id="startMenu">
+	<div class="text-center space-y-1">
+		<h1 class="text-5xl font-bold">Adventure Game</h1>
+		<h2 class="text-4xl font-medium text-neutral-300">Welcome Player!</h2>
+	</div>
 
-{% block title %}Home{% endblock %}
+	<button
+		onclick="startGame()"
+		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
+	>
+		Start Game
+	</button>
+	<button
+		class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mt-5 w-[400px]"
+	>
+		Exit
+	</button>
+</div>
 
-{% block content %}
-<div class="container mx-auto p-6 text-center relative">
-    <!-- The image is positioned normally -->
-    <img 
-      class="h-auto w-full"
-      src="{{ url_for('static', filename='images/bg_menu.png') }}"
-      alt="image description"
-    />
-  
-    <!-- This overlay covers the same space as the parent -->
-    <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center">
-      <h1 class="text-3xl font-bold text-white">
-        Adventure Game
-      </h1>
-      <h1 class="text-3xl font-bold">Welcome, {{ player_name }}!</h1>
-      <p class="mt-4 text-white">
-        This is the main page of your Flask application.
-      </p>
-      <button onclick="window.location.href='{{ url_for('start') }}'"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
-        Play
-      </button>     
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
-        Exit
-      </button>     
-    </div>
-  </div>
+<div class="hidden" id="transitionVideo">
+	<video width="100%" id="videoElement" class="mx-auto h-screen">
+		<source
+			src="{{ url_for('static', filename='images/transition.mp4') }}"
+			type="video/mp4"
+		/>
+		Your browser does not support the video tag.
+	</video>
+</div>
+
+<div class="relative hidden" id="storyScene">
+	<h1 class="text-4xl pixel_font">Story Scene here!</h1>
+</div>
+
+<script>
+	function startGame() {
+		const startMenu = document.getElementById("startMenu");
+		const storyScene = document.getElementById("storyScene");
+		const transitionVideo = document.getElementById("transitionVideo");
+		const videoElement = document.getElementById("videoElement");
+
+		startMenu.classList.remove("flex");
+		startMenu.classList.add("hidden");
+
+		transitionVideo.classList.remove("hidden");
+		transitionVideo.classList.add("fadeIn");
+
+		videoElement.play();
+		setTimeout(() => {
+			videoElement.pause();
+			videoElement.currentTime = 0;
+			videoElement.onended();
+		}, 2000);
+
+		videoElement.onended = function () {
+			transitionVideo.classList.add("hidden");
+			storyScene.classList.remove("hidden");
+			storyScene.classList.remove("block");
+			storyScene.classList.add("fadeIn");
+		};
+	}
+</script>
+
 {% endblock %}
