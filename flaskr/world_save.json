@@ -1,6 +1,8 @@
 {
-	"defeated_enemies": {
-		"Forest": []
-	},
-	"visited_areas": []
+    "defeated_enemies": {
+        "Cave": [],
+        "Forest": [],
+        "Mountains": []
+    },
+    "visited_areas": []
 }
