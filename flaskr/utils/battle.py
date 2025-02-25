@@ -8,153 +8,152 @@ def encounter_enemies(area, world_state):
         "Forest": [
             {
                 "name": "Diwata",
-                "HP": 18.0,
-                "ATK": 4.5,
-                "DEF": 4.0,
+                "HP": 18,
+                "ATK": 5,
+                "DEF": 4,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Healing Herb", "type": "item"},
-                    {"name": "Nature Staff", "type": "weapon", "ATK": 3.0},
+                    {"name": "Nature Staff", "type": "weapon", "ATK": 3},
                 ],
             },
             {
                 "name": "Kapri",
-                "HP": 20.0,
-                "ATK": 4.0,
-                "DEF": 5.0,
+                "HP": 20,
+                "ATK": 4,
+                "DEF": 5,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Mystic Acorn", "type": "item"},
-                    {"name": "Wooden Sword", "type": "weapon", "ATK": 2.5},
+                    {"name": "Wooden Sword", "type": "weapon", "ATK": 3},
                 ],
             },
             {
                 "name": "Tikbalang",
-                "HP": 22.0,
-                "ATK": 5.5,
-                "DEF": 3.0,
+                "HP": 22,
+                "ATK": 6,
+                "DEF": 3,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Lucky Feather", "type": "item"},
-                    {"name": "Hoof Blade", "type": "weapon", "ATK": 3.5},
+                    {"name": "Hoof Blade", "type": "weapon", "ATK": 4},
                 ],
             },
         ],
         "Mountains": [
             {
                 "name": "Mananggal",
-                "HP": 25.0,
-                "ATK": 5.0,
-                "DEF": 4.0,
+                "HP": 25,
+                "ATK": 5,
+                "DEF": 4,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Bat Wing", "type": "item"},
-                    {"name": "Cursed Dagger", "type": "weapon", "ATK": 4.0},
+                    {"name": "Cursed Dagger", "type": "weapon", "ATK": 4},
                 ],
             },
             {
                 "name": "Tyanak",
-                "HP": 18.0,
-                "ATK": 6.0,
-                "DEF": 3.5,
+                "HP": 18,
+                "ATK": 6,
+                "DEF": 4,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Demonic Doll", "type": "item"},
-                    {"name": "Tiny Blade", "type": "weapon", "ATK": 3.0},
+                    {"name": "Tiny Blade", "type": "weapon", "ATK": 3},
                 ],
             },
             {
                 "name": "Tik-tik",
-                "HP": 20.0,
-                "ATK": 5.0,
-                "DEF": 5.0,
+                "HP": 20,
+                "ATK": 5,
+                "DEF": 5,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Dark Essence", "type": "item"},
-                    {"name": "Shadow Bow", "type": "weapon", "ATK": 3.5},
+                    {"name": "Shadow Bow", "type": "weapon", "ATK": 4},
                 ],
             },
         ],
         "Cave": [
             {
                 "name": "Skeleton",
-                "HP": 16.0,
-                "ATK": 4.5,
-                "DEF": 3.0,
+                "HP": 16,
+                "ATK": 5,
+                "DEF": 3,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Bone Fragment", "type": "item"},
-                    {"name": "Ancient Sword", "type": "weapon", "ATK": 3.0},
+                    {"name": "Ancient Sword", "type": "weapon", "ATK": 3},
                 ],
             },
             {
                 "name": "Cave Bat",
-                "HP": 15.0,
-                "ATK": 4.0,
-                "DEF": 3.0,
+                "HP": 15,
+                "ATK": 4,
+                "DEF": 3,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Echo Crystal", "type": "item"},
-                    {"name": "Sonic Blade", "type": "weapon", "ATK": 2.5},
+                    {"name": "Sonic Blade", "type": "weapon", "ATK": 3},
                 ],
             },
             {
                 "name": "Goblin",
-                "HP": 18.0,
-                "ATK": 5.0,
-                "DEF": 4.0,
+                "HP": 18,
+                "ATK": 5,
+                "DEF": 4,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Gold Nugget", "type": "item"},
-                    {"name": "Goblin Sword", "type": "weapon", "ATK": 3.0},
+                    {"name": "Goblin Sword", "type": "weapon", "ATK": 3},
                 ],
             },
         ],
         "Swamp": [
             {
                 "name": "Swamp Beast",
-                "HP": 24.0,
-                "ATK": 5.0,
-                "DEF": 5.0,
+                "HP": 24,
+                "ATK": 5,
+                "DEF": 5,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Toxic Fang", "type": "item"},
-                    {"name": "Poison Blade", "type": "weapon", "ATK": 4.0},
+                    {"name": "Poison Blade", "type": "weapon", "ATK": 4},
                 ],
             },
             {
                 "name": "Bog Creature",
-                "HP": 20.0,
-                "ATK": 4.5,
-                "DEF": 4.0,
+                "HP": 20,
+                "ATK": 5,
+                "DEF": 4,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Cursed Gem", "type": "item"},
-                    {"name": "Bog Staff", "type": "weapon", "ATK": 3.5},
+                    {"name": "Bog Staff", "type": "weapon", "ATK": 4},
                 ],
             },
             {
                 "name": "Mud Monster",
-                "HP": 22.0,
-                "ATK": 4.0,
-                "DEF": 6.0,
+                "HP": 22,
+                "ATK": 4,
+                "DEF": 6,
                 "EXP_DROP": 100,
                 "DROPS": [
                     {"name": "Dark Shard", "type": "item"},
-                    {"name": "Mud Hammer", "type": "weapon", "ATK": 3.0},
+                    {"name": "Mud Hammer", "type": "weapon", "ATK": 3},
                 ],
             },
         ],
     }
 
-    # Bosses by area with a trigger kill count
     bosses = {
         "Forest": [
             {
                 "name": "Big Boss",
-                "HP": 50.0,
-                "ATK": 8.0,
-                "DEF": 5.0,
+                "HP": 50,
+                "ATK": 8,
+                "DEF": 5,
                 "EXP_DROP": 500,
                 "DROPS": [
                     {"name": "Forest Boss Trophy", "type": "item"},
@@ -165,9 +164,9 @@ def encounter_enemies(area, world_state):
         "Mountains": [
             {
                 "name": "Big Boss",
-                "HP": 50.0,
-                "ATK": 8.0,
-                "DEF": 5.0,
+                "HP": 50,
+                "ATK": 8,
+                "DEF": 5,
                 "EXP_DROP": 500,
                 "DROPS": [
                     {"name": "Mountains Boss Trophy", "type": "item"},
@@ -178,9 +177,9 @@ def encounter_enemies(area, world_state):
         "Cave": [
             {
                 "name": "Big Boss",
-                "HP": 50.0,
-                "ATK": 8.0,
-                "DEF": 5.0,
+                "HP": 50,
+                "ATK": 8,
+                "DEF": 5,
                 "EXP_DROP": 500,
                 "DROPS": [
                     {"name": "Cave Boss Trophy", "type": "item"},
@@ -191,9 +190,9 @@ def encounter_enemies(area, world_state):
         "Swamp": [
             {
                 "name": "Big Boss",
-                "HP": 50.0,
-                "ATK": 8.0,
-                "DEF": 5.0,
+                "HP": 50,
+                "ATK": 8,
+                "DEF": 5,
                 "EXP_DROP": 500,
                 "DROPS": [
                     {"name": "Swamp Boss Trophy", "type": "item"},
@@ -245,28 +244,18 @@ def encounter_enemies(area, world_state):
         return None
 
 
-def calculate_damage(attacker, defender, weapon_bonus=0.0):
-    """
-    Calculate damage dealt by attacker to defender.
-    Returns: (raw_damage, damage_reduction, final_damage, dice_roll)
-    """
-    # Base damage calculation with weapon bonus (if any)
-    base_attack = attacker["ATK"] + weapon_bonus
-
-    # Roll a dice (1-6) for a multiplier between 0.1 and 0.6
+def calculate_damage(attacker, defender, weapon_bonus=0):
+    """Calculate damage dealt by attacker to defender."""
     dice_roll = random.randint(1, 6)
-    multiplier = dice_roll * 0.1
-
-    # Raw damage before defense reduction
-    raw_damage = base_attack + (base_attack * multiplier)
-
-    # Each point in DEF reduces raw damage by 10%
-    damage_reduction = raw_damage * (defender["DEF"] / 10)
-
-    # Final damage cannot be negative
-    final_damage = max(0, raw_damage - damage_reduction)
-
-    return raw_damage, damage_reduction, final_damage, dice_roll
+    
+    # Add weapon bonus to attacker's ATK
+    total_attack = attacker["ATK"] + weapon_bonus
+    raw_damage = total_attack - defender["DEF"]
+    
+    # Ensure minimum damage of 1
+    final_damage = max(raw_damage, 1)
+    
+    return raw_damage, 0, final_damage, dice_roll
 
 
 def add_experience(player, amount):

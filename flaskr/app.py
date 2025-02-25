@@ -79,90 +79,52 @@ def battle():
 
 @app.route("/battle/attack", methods=["POST"])
 def battle_attack():
-    """
-    Endpoint to process an attack action in battle.
-    Uses the helper functions to calculate damage, update the world state,
-    award experience, and save progress.
-    """
-    # Retrieve the current battle state from session
     player = session.get("player_class")
     enemy = session.get("enemy")
-    # Ensure world_state has keys for defeated_enemies and visited_areas
-    world_state = session.get(
-        "world_state", {"defeated_enemies": {}, "visited_areas": []}
-    )
+    world_state = session.get("world_state", {"defeated_enemies": {}, "visited_areas": []})
     area = session.get("battle_area")
 
     if not (player and enemy and area):
         return jsonify({"error": "Battle state not found"}), 400
 
     # Calculate player's attack damage.
-    weapon_bonus = (
-        player["equipped_weapon"]["ATK"] if player.get("equipped_weapon") else 0.0
-    )
-    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-        player, enemy, weapon_bonus
-    )
+    weapon_bonus = player["equipped_weapon"]["ATK"] if player.get("equipped_weapon") else 0.0
+    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(player, enemy, weapon_bonus)
+    final_damage = int(final_damage)  # Convert to integer
     enemy["HP"] -= final_damage
-    message = f"You attacked {enemy['name']} for {final_damage:.1f} damage! "
+    message = f"You attacked {enemy['name']} for {final_damage} damage!"
 
-    # Check if enemy is defeated.
+
+    # **Fix: Ensure battle ends properly**
     if enemy["HP"] <= 0:
-        message += f"{enemy['name']} is defeated!"
+        message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
 
-        # Process enemy drop (weapon or item)
+        # Process enemy drop
         drop = random.choice(enemy["DROPS"])
         if drop["type"] == "weapon":
-            player["inventory"]["weapons"].append(
-                {"name": drop["name"], "ATK": drop["ATK"]}
-            )
-            message += f" Enemy dropped a {drop['name']} (Weapon, ATK: {drop['ATK']}). "
+            player["inventory"]["weapons"].append({"name": drop["name"], "ATK": drop["ATK"]})
+            message += f" Enemy dropped a {drop['name']} (Weapon, ATK: {drop['ATK']})."
         else:
             player["inventory"]["items"].append({"name": drop["name"]})
-            message += f" Enemy dropped a {drop['name']} (Item). "
+            message += f" Enemy dropped a {drop['name']} (Item)."
 
         add_experience(player, enemy["EXP_DROP"])
         save_world(world_state)
         save_player(player)
 
-        # Remove enemy from session to indicate battle over
+        # **Ensure battle is over**
         session.pop("enemy", None)
         session["player_class"] = player
         session["world_state"] = world_state
-        return jsonify(
-            {
-                "message": message,
-                "battle_over": True,
-                "player": player,
-                "enemy": enemy,  # Optionally, send minimal enemy data
-            }
-        )
+        return jsonify({"message": message, "battle_over": True, "player": player, "enemy": {"HP": 0}})  # **Fix: Send enemy HP as 0**
 
-    # Process enemy's counterattack.
-    if enemy["name"].lower() == "big boss":
-        boss_action = random.choice(["attack", "heal"])
-        if boss_action == "attack":
-            raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-                enemy, player
-            )
-            player["HP"] -= final_damage
-            message += (
-                f"{enemy['name']} counterattacked for {final_damage:.1f} damage! "
-            )
-        else:
-            heal_amount = enemy["max_HP"] * 0.2  # Boss heals 20% of its max HP
-            old_hp = enemy["HP"]
-            enemy["HP"] = min(enemy["HP"] + heal_amount, enemy["max_HP"])
-            message += f"{enemy['name']} healed for {enemy['HP'] - old_hp:.1f} HP! "
-    else:
-        raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-            enemy, player
-        )
-        player["HP"] -= final_damage
-        message += f"{enemy['name']} counterattacked for {final_damage:.1f} damage! "
+    # Enemy counterattacks
+    final_damage = int(final_damage)
+    player["HP"] -= final_damage
+    message += f" {enemy['name']} counterattacked for {final_damage} damage!"
 
-    # Check if the player has been defeated.
+    # Check if player is defeated
     if player["HP"] <= 0:
         message += " You have been defeated!"
         save_world(world_state)
@@ -170,17 +132,13 @@ def battle_attack():
         session.pop("enemy", None)
         session["player_class"] = player
         session["world_state"] = world_state
-        return jsonify(
-            {"message": message, "battle_over": True, "player": player, "enemy": enemy}
-        )
+        return jsonify({"message": message, "battle_over": True, "player": player, "enemy": enemy})
 
-    # Update session with new state and return the battle status.
+    # Update session with new state
     session["player_class"] = player
     session["enemy"] = enemy
     session["world_state"] = world_state
-    return jsonify(
-        {"message": message, "battle_over": False, "player": player, "enemy": enemy}
-    )
+    return jsonify({"message": message, "battle_over": False, "player": player, "enemy": enemy})
 
 
 @app.route("/battle/defend", methods=["POST"])
@@ -193,7 +151,7 @@ def battle_defend():
     if not (player and enemy and area):
         return jsonify({"error": "Battle state not found"}), 400
 
-    temp_def_bonus = player["DEF"] * 0.5
+    temp_def_bonus = int(player["DEF"] * 0.5)  # Convert to integer
     player["DEF"] += temp_def_bonus
     message = "You brace yourself and boost your defense! "
 
@@ -201,8 +159,9 @@ def battle_defend():
     raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
         enemy, player
     )
+    final_damage = int(final_damage)
     player["HP"] -= final_damage
-    message += f"{enemy['name']} attacked for {final_damage:.1f} damage! "
+    message += f"{enemy['name']} attacked for {final_damage} damage! "
 
     # Remove temporary defense bonus
     player["DEF"] -= temp_def_bonus
@@ -249,6 +208,7 @@ def battle_run():
         raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
             enemy, player
         )
+        final_damage = int(final_damage)
         player["HP"] -= final_damage
         message += f"{enemy['name']} attacked you for {final_damage:.1f} damage! "
 
@@ -329,7 +289,7 @@ def use_item():
             return jsonify({"error": "Invalid item index"}), 400
         item = items.pop(idx)
         if item["name"] in ["Small Potion", "Health Potion"]:
-            heal_amount = player["max_HP"] * item["heal"]
+            heal_amount = int(player["max_HP"] * item["heal"])  # Convert to integer
             old_hp = player["HP"]
             player["HP"] = min(player["HP"] + heal_amount, player["max_HP"])
             session["player_class"] = player

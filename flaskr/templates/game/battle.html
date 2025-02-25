@@ -14,7 +14,7 @@
             </div>
             <!-- Enemy Health Cell -->
             <div class="row-span-1 bg-green-500 row-start-3 w-[265px] h-[45px] rounded-br-lg">
-                <p>HP: {{ enemy.HP if enemy else '' }}</p>
+                <p id="enemyHP">HP: {{ enemy.HP if enemy else '' }}</p>
             </div>
             <!-- Enemy Portrait Cell (Grid system remains unchanged) -->
             <div class="bg-neutral-100 col-start-3 row-start-3 row-span-3 text-neutral-900">
@@ -45,7 +45,9 @@
                         </button>
                     </div>
                     <div class="grid grid-rows-2 gap-4 ml-[35px]">
-                        <p class="bg-green-400 w-[250px] rounded">HP</p>
+                        <p id="playerHP" class="bg-green-400 w-[250px] rounded">
+                            HP: {{ player.HP if player else '' }}
+                        </p>
                         <p class="bg-blue-400 w-[250px] rounded">MP</p>
                     </div>
                  </div>
@@ -56,6 +58,25 @@
     {% endif %}
 </div>
 <script>
+    function updateHPStatus(data) {
+        // Changed toFixed(1) to integer display
+        if (data.enemy && typeof data.enemy.HP !== 'undefined') {
+            document.getElementById('enemyHP').innerText = "HP: " + Math.round(data.enemy.HP);
+        }
+        
+        if (data.player && typeof data.player.HP !== 'undefined') {
+            document.getElementById('playerHP').innerText = "HP: " + Math.round(data.player.HP);
+        }
+
+        // **Fix: Redirect only if battle_over is true**
+        if (data.battle_over) {
+            setTimeout(() => {
+                window.location.href = "{{ url_for('game') }}";
+            }, 1500);  // Delay to allow message display before redirecting
+        }
+    }
+
+    
     // Helper function to process battle actions for Fight and Defend
     function processBattleAction(actionUrl) {
         fetch(actionUrl, {
@@ -63,12 +84,13 @@
         })
         .then(response => response.json())
         .then(data => {
-            // Update your battle message, HP bars, etc.
+            // Update battle message
             document.getElementById('battleMessage').innerText = data.message;
-            // Optionally update player/enemy stats on the screen
-            // For example, update innerText for HP values here.
+            
+            // Update HP displays and check for defeat conditions
+            updateHPStatus(data);
     
-            // If battle is over, disable the battle buttons
+            // If battle is over, disable the battle buttons (if not already redirected)
             if (data.battle_over) {
                 document.getElementById('fightButton').disabled = true;
                 document.getElementById('defendButton').disabled = true;
@@ -88,17 +110,20 @@
         processBattleAction("{{ url_for('battle_defend') }}");
     });
     
-    // Event listener for the Run button with redirection on successful escape
+    // Event listener for the Run button (with redirection on successful escape)
     document.getElementById('runButton').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent any default redirect behavior
+        e.preventDefault();
         fetch("{{ url_for('battle_run') }}", { method: 'POST' })
         .then(response => response.json())
         .then(data => {
-            // Update the battle message
+            // Update battle message
             document.getElementById('battleMessage').innerText = data.message;
-            // If battle_over is true (i.e. the player escaped successfully or the battle ended)
+            
+            // Update HP displays and check for defeat conditions
+            updateHPStatus(data);
+    
+            // If battle is over, redirect to the game screen
             if (data.battle_over) {
-                // Redirect the player to game.html
                 window.location.href = "{{ url_for('game') }}";
             }
         })
