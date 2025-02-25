@@ -245,17 +245,17 @@ def encounter_enemies(area, world_state):
 
 
 def calculate_damage(attacker, defender, weapon_bonus=0):
-    """Calculate damage dealt by attacker to defender."""
+    base_attack = attacker["ATK"] + weapon_bonus
     dice_roll = random.randint(1, 6)
+    multiplier = dice_roll * 0.1
 
-    # Add weapon bonus to attacker's ATK
-    total_attack = attacker["ATK"] + weapon_bonus
-    raw_damage = total_attack - defender["DEF"]
+    raw_damage = base_attack + (base_attack * multiplier)
 
-    # Ensure minimum damage of 1
-    final_damage = max(raw_damage, 1)
+    damage_reduction = raw_damage * (defender["DEF"] / 10)
 
-    return raw_damage, 0, final_damage, dice_roll
+    final_damage = int(round(max(1, raw_damage - damage_reduction)))
+
+    return raw_damage, damage_reduction, final_damage
 
 
 def add_experience(player, amount):

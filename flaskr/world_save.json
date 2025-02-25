@@ -1,0 +1,29 @@
+{
+    "defeated_enemies": {
+        "Forest": [
+            "Kapri",
+            "Diwata",
+            "Tikbalang"
+        ]
+    },
+    "visited_areas": [
+        "Forest"
+    ],
+    "current_battle": {
+        "enemy": {
+            "name": "Big Boss",
+            "HP": 20,
+            "ATK": 8,
+            "DEF": 5,
+            "EXP_DROP": 500,
+            "DROPS": [
+                {
+                    "name": "Forest Boss Trophy",
+                    "type": "item"
+                }
+            ],
+            "trigger_kill_count": 3
+        },
+        "area": "Forest"
+    }
+}

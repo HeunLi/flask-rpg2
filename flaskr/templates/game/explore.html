@@ -1,0 +1,91 @@
+{% extends "base.html" %} {% block title %}Game{% endblock %} {% block content
+%}
+
+<div>
+	<div class="flex justify-center items-center h-screen p-20 gap-5">
+		<div class="w-full h-full flex gap-5">
+			<div
+				class="w-1/2 h-full bg-neutral-500/20 rounded-2xl overflow-hidden p-5"
+			>
+				<img
+					src="{{  url_for('static', filename='images/start_bg.jpg') }}"
+					alt=""
+					class="w-full h-full object-object rounded-xl"
+				/>
+			</div>
+			<div class="w-1/2 h-full space-y-5">
+				<div class="w-full h-1/2 bg-neutral-500/20 p-5 rounded-2xl">
+					<h1 class="pixel_font text-4xl font-medium text-white">
+						Class Stats - <span class="text-amber-400">Wizard</span>
+					</h1>
+					<div class="grid grid-cols-2 gap-5 mt-4">
+						<div class="pixel_font text-xl">
+							<span>HP:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>MAX HP:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>ATK:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>DEF:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>LVL:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>EXP:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>GOLD:</span>
+							<span class="text-amber-400 ml-1">20</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>WEAPONS:</span>
+							<span class="text-amber-400 ml-1">Basic Sword</span>
+						</div>
+						<div class="pixel_font text-xl">
+							<span>USERNAME:</span>
+							<span class="text-amber-400 ml-1"
+								>Spring Valley</span
+							>
+						</div>
+					</div>
+				</div>
+				<div class="w-full h-[310px] bg-neutral-500/20 rounded-2xl p-5">
+					<div class="grid grid-cols-2 gap-5">
+						<button
+							class="py-3 px-5 w-full h-[125px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+						>
+							Explore
+						</button>
+						<button
+							class="py-3 px-5 w-full h-[125px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+						>
+							Sleep
+						</button>
+						<button
+							class="py-3 px-5 w-full h-[125px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+						>
+							Return
+						</button>
+						<button
+							class="py-3 px-5 w-full h-[125px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+						>
+							Inventory
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -18,7 +18,7 @@ app.secret_key = "your_secret_key"
 
 global player
 player = {}
-# Define shop items (this can be made dynamic if needed)
+
 SHOP_ITEMS = [
     {"name": "Iron Sword", "ATK": 5.0, "cost": 50, "type": "weapon"},
     {"name": "Health Potion", "heal": 25, "cost": 30, "type": "item"},
@@ -93,6 +93,8 @@ def home():
 
 @app.route("/start", methods=["GET", "POST"])
 def start():
+    player = load_player()
+
     if player:
         return redirect(url_for("game"))
 
@@ -123,7 +125,7 @@ def game():
     return render_template("game/game.html", player=player)
 
 
-@app.route("/reset-game", methods=["POST"])
+@app.route("/reset-game", methods=["POST", "GET"])
 def reset_game():
     try:
         # Delete save files if they exist
@@ -134,6 +136,13 @@ def reset_game():
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
+
+
+@app.route("/explore")
+def explore():
+    # player = load_player()
+    # world_state = load_world()
+    return render_template("game/explore.html")
 
 
 # -------------------------------------------
@@ -173,7 +182,7 @@ def battle_attack():
 
     # Calculate damage
     weapon_bonus = player.get("equipped_weapon", {}).get("ATK", 0.0)
-    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
+    raw_damage, damage_reduction, final_damage = calculate_damage(
         player, enemy, weapon_bonus
     )
     enemy["HP"] -= final_damage
@@ -184,7 +193,7 @@ def battle_attack():
         enemy["HP"] = 0  # Ensure enemy HP does not go negative
         message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
-        add_experience(player, enemy["exp"])
+        add_experience(player, enemy["EXP_DROP"])
 
         # Save progress
         save_world(world_state)
@@ -203,9 +212,7 @@ def battle_attack():
         )
 
     # Process enemy counter-attack
-    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-        enemy, player
-    )
+    raw_damage, damage_reduction, final_damage = calculate_damage(enemy, player)
     player["HP"] -= final_damage
     message += f" {enemy['name']} counterattacked for {final_damage:.1f} damage!"
 
@@ -246,9 +253,7 @@ def battle_defend():
     message = "You brace yourself and boost your defense! "
 
     # Enemy attacks while you are defending
-    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-        enemy, player
-    )
+    raw_damage, damage_reduction, final_damage = calculate_damage(enemy, player)
     final_damage = int(final_damage)
     player["HP"] -= final_damage
     message += f"{enemy['name']} attacked for {final_damage} damage! "
@@ -298,9 +303,7 @@ def battle_run():
         )
 
     message = "Escape failed! As you try to run, "
-    raw_damage, damage_reduction, final_damage, dice_roll = calculate_damage(
-        enemy, player
-    )
+    raw_damage, damage_reduction, final_damage = calculate_damage(enemy, player)
     player["HP"] -= final_damage
     message += f"{enemy['name']} attacked you for {final_damage:.1f} damage! "
 

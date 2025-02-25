@@ -1,3 +1,10 @@
-1. World Json Not Saving
-2. Remove session and use file to load/save
-3. Inventory
+1. Explore, Sleep, page/functionality
+2. Battle Flow
+3. Battle Animation
+4. Battle Character
+5. Video Background on Game Start Menu
+6. Exit Function?
+7. Close Area after defeating boss
+8. Stats on choosing a class
+9. UI Improvements
+10. When Leveling up add a popup with increased stats

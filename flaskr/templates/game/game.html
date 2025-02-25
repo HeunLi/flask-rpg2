@@ -1,7 +1,7 @@
 <!-- templates/game.html -->
 {% extends "base.html" %} {% block title %}Game{% endblock %} {% block content
 %}
-<div class="container mx-auto p-6 text-center">
+<div class="container mx-auto p-6 text-center fadeIn">
 	<h1 class="text-3xl font-bold">Welcome, {{ player['username'] }}!</h1>
 	<p class="mt-4">Your adventure begins here...</p>
 
@@ -44,7 +44,10 @@
 				</button>
 			</div>
 			<div class="...">
-				<button id="merchantButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]">
+				<button
+					id="merchantButton"
+					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 w-[100px]"
+				>
 					Merchant
 				</button>
 			</div>
@@ -80,7 +83,5 @@
 		Quit
 	</button>
 </div>
-{% include "inventory_modal.html" %} 
-{% include "merchant_modal.html" %}
-
-{% endblock %}
+{% include "inventory_modal.html" %} {% include "merchant_modal.html" %} {%
+endblock %}

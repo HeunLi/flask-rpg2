@@ -4,7 +4,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container mx-auto p-6 text-center relative">
+<div class="container mx-auto p-6 text-center relative fadeIn">
     <div class="w-full h-full flex flex-col items-center justify-center">
       <h1 class="text-3xl font-bold mb-4 animate-fade-in">Enter Your Name & Select Your Class</h1>
       <form action="{{ url_for('start') }}" method="POST">
