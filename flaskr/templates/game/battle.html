@@ -29,18 +29,18 @@
             <div class="row-span-1 col-span-8 row-start-6 bg-neutral-100 rounded-t-lg border-4 border-t-neutral-700 border-r-neutral-700 border-l-neutral-700 text-neutral-900">
                 <!-- Additional content here -->
                  <div class="grid grid-cols-4 my-5">
-                    <p class="col-span-2">What will you do?</p>
+                    <div id="battleMessage" class="mt-4"></div>
                     <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                        <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
+                        <button id="fightButton" class="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
                             Fight
                         </button>
-                        <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
+                        <button id="defendButton" class="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
                             Defend
                         </button>
-                        <button class="bagButton bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
+                        <button id="bagButton" class="bagButton bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
                             Bag
                         </button>
-                        <button onclick="window.location.href='{{ url_for('game') }}'" class="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
+                        <button id="runButton" class="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded">
                             Run
                         </button>
                     </div>
@@ -55,5 +55,57 @@
         <h1 class="text-3xl font-bold">No location selected!</h1>
     {% endif %}
 </div>
+<script>
+    // Helper function to process battle actions for Fight and Defend
+    function processBattleAction(actionUrl) {
+        fetch(actionUrl, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update your battle message, HP bars, etc.
+            document.getElementById('battleMessage').innerText = data.message;
+            // Optionally update player/enemy stats on the screen
+            // For example, update innerText for HP values here.
+    
+            // If battle is over, disable the battle buttons
+            if (data.battle_over) {
+                document.getElementById('fightButton').disabled = true;
+                document.getElementById('defendButton').disabled = true;
+                document.getElementById('runButton').disabled = true;
+            }
+        })
+        .catch(err => console.error(err));
+    }
+    
+    // Event listener for the Fight button
+    document.getElementById('fightButton').addEventListener('click', function() {
+        processBattleAction("{{ url_for('battle_attack') }}");
+    });
+    
+    // Event listener for the Defend button
+    document.getElementById('defendButton').addEventListener('click', function() {
+        processBattleAction("{{ url_for('battle_defend') }}");
+    });
+    
+    // Event listener for the Run button with redirection on successful escape
+    document.getElementById('runButton').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent any default redirect behavior
+        fetch("{{ url_for('battle_run') }}", { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            // Update the battle message
+            document.getElementById('battleMessage').innerText = data.message;
+            // If battle_over is true (i.e. the player escaped successfully or the battle ended)
+            if (data.battle_over) {
+                // Redirect the player to game.html
+                window.location.href = "{{ url_for('game') }}";
+            }
+        })
+        .catch(err => console.error(err));
+    });
+    
+    // (Implement similar behavior for the Bag button if needed)
+</script>
 {% include "inventory_modal.html" %}
 {% endblock %}
