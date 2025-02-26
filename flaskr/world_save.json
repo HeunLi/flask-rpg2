@@ -1,10 +1,10 @@
 {
-    "defeated_enemies": {
-        "Forest": [],
-        "Mountains": [],
-        "Cave": [],
-        "Swamp": []
-    },
-    "visited_areas": [],
-    "current_battle": {}
+	"defeated_enemies": {
+		"Forest": ["Big Boss"],
+		"Mountains": ["Big Boss"],
+		"Cave": ["Big Boss"],
+		"Swamp": ["Big Boss"]
+	},
+	"visited_areas": ["Forest"],
+	"current_battle": {}
 }

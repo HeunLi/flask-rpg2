@@ -1,11 +1,11 @@
 {
-    "class": "Swordsman",
-    "HP": 4,
-    "ATK": 5,
-    "DEF": 6,
-    "LVL": 1,
-    "EXP": 0,
-    "MAX_HP": 25,
+    "class": "Ranger",
+    "HP": 52.0,
+    "ATK": 8.0,
+    "DEF": 8.0,
+    "LVL": 4,
+    "EXP": 200,
+    "MAX_HP": 52.0,
     "inventory": {
         "weapons": [
             {
@@ -21,6 +21,12 @@
             {
                 "name": "Health Potion",
                 "heal": 0.5
+            },
+            {
+                "name": "Herbs"
+            },
+            {
+                "name": "Forest Boss Trophy"
             }
         ]
     },
@@ -29,5 +35,5 @@
         "ATK": 2
     },
     "gold": 100,
-    "username": "Spring Valley"
+    "username": "Qwerty"
 }

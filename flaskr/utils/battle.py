@@ -13,6 +13,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 4,
                 "EXP_DROP": 100,
+                "MAX_HP": 18,
                 "DROPS": [
                     {"name": "Herbs", "type": "item"},
                     {"name": "Nature Staff", "type": "weapon", "ATK": 3},
@@ -24,6 +25,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 4,
                 "DEF": 5,
                 "EXP_DROP": 100,
+                "MAX_HP": 20,
                 "DROPS": [
                     {"name": "Mystic Acorn", "type": "item"},
                     {"name": "Wooden Sword", "type": "weapon", "ATK": 3},
@@ -35,6 +37,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 6,
                 "DEF": 3,
                 "EXP_DROP": 100,
+                "MAX_HP": 22,
                 "DROPS": [
                     {"name": "Lucky Feather", "type": "item"},
                     {"name": "Hoof Blade", "type": "weapon", "ATK": 4},
@@ -48,6 +51,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 4,
                 "EXP_DROP": 100,
+                "MAX_HP": 25,
                 "DROPS": [
                     {"name": "Bat Wing", "type": "item"},
                     {"name": "Cursed Dagger", "type": "weapon", "ATK": 4},
@@ -59,6 +63,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 6,
                 "DEF": 4,
                 "EXP_DROP": 100,
+                "MAX_HP": 18,
                 "DROPS": [
                     {"name": "Demonic Doll", "type": "item"},
                     {"name": "Tiny Blade", "type": "weapon", "ATK": 3},
@@ -70,6 +75,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 5,
                 "EXP_DROP": 100,
+                "MAX_HP": 20,
                 "DROPS": [
                     {"name": "Dark Essence", "type": "item"},
                     {"name": "Shadow Bow", "type": "weapon", "ATK": 4},
@@ -83,6 +89,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 3,
                 "EXP_DROP": 100,
+                "MAX_HP": 16,
                 "DROPS": [
                     {"name": "Bone Fragment", "type": "item"},
                     {"name": "Ancient Sword", "type": "weapon", "ATK": 3},
@@ -94,6 +101,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 4,
                 "DEF": 3,
                 "EXP_DROP": 100,
+                "MAX_HP": 15,
                 "DROPS": [
                     {"name": "Echo Crystal", "type": "item"},
                     {"name": "Sonic Blade", "type": "weapon", "ATK": 3},
@@ -105,6 +113,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 4,
                 "EXP_DROP": 100,
+                "MAX_HP": 18,
                 "DROPS": [
                     {"name": "Gold Nugget", "type": "item"},
                     {"name": "Goblin Sword", "type": "weapon", "ATK": 3},
@@ -118,6 +127,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 5,
                 "EXP_DROP": 100,
+                "MAX_HP": 24,
                 "DROPS": [
                     {"name": "Toxic Fang", "type": "item"},
                     {"name": "Poison Blade", "type": "weapon", "ATK": 4},
@@ -129,6 +139,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 5,
                 "DEF": 4,
                 "EXP_DROP": 100,
+                "MAX_HP": 20,
                 "DROPS": [
                     {"name": "Cursed Gem", "type": "item"},
                     {"name": "Bog Staff", "type": "weapon", "ATK": 4},
@@ -140,6 +151,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 4,
                 "DEF": 6,
                 "EXP_DROP": 100,
+                "MAX_HP": 22,
                 "DROPS": [
                     {"name": "Dark Shard", "type": "item"},
                     {"name": "Mud Hammer", "type": "weapon", "ATK": 3},
@@ -156,6 +168,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 8,
                 "DEF": 5,
                 "EXP_DROP": 500,
+                "MAX_HP": 50,
                 "DROPS": [
                     {"name": "Forest Boss Trophy", "type": "item"},
                 ],
@@ -169,6 +182,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 8,
                 "DEF": 5,
                 "EXP_DROP": 500,
+                "MAX_HP": 50,
                 "DROPS": [
                     {"name": "Mountains Boss Trophy", "type": "item"},
                 ],
@@ -182,6 +196,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 8,
                 "DEF": 5,
                 "EXP_DROP": 500,
+                "MAX_HP": 50,
                 "DROPS": [
                     {"name": "Cave Boss Trophy", "type": "item"},
                 ],
@@ -195,6 +210,7 @@ def encounter_enemies(area, world_state):
                 "ATK": 8,
                 "DEF": 5,
                 "EXP_DROP": 500,
+                "MAX_HP": 50,
                 "DROPS": [
                     {"name": "Swamp Boss Trophy", "type": "item"},
                 ],
