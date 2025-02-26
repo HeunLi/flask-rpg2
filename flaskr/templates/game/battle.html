@@ -3,26 +3,40 @@
 %} {% block content %}
 <div class="container mx-auto p-6 text-center h-[750px]">
 	{% if location %}
-	<h1 class="text-3xl font-bold pixel_font mb-4">You have arrived at the <span class="text-amber-400">{{ location }}</span>!</h1>
+	<h1 class="text-4xl font-bold pixel_font mb-4">
+		You have encountered an
+		<span class="text-amber-400">Enemy!</span>
+	</h1>
 	<!-- The grid container now fills the parent's height -->
-	<div class="grid grid-cols-8 grid-rows-6 bg-neutral-500/20 h-full rounded overflow-hidden">
+	<div
+		class="grid grid-cols-8 grid-rows-6 bg-neutral-500/20 h-full rounded overflow-hidden"
+	>
 		<!-- Enemy Name Cell -->
 		<div
 			class="row-span-1 row-start-2 bg-amber-400 text-neutral-900 w-[300px] content-center rounded-r-lg animate__animated animate__fadeInLeft"
 		>
-			<p class="text-3xl pixel_font">{{ enemy.name if enemy else 'No enemy encountered' }}</p>
+			<p class="text-3xl pixel_font">
+				{{ enemy.name if enemy else 'No enemy encountered' }}
+			</p>
 		</div>
 		<!-- Enemy Health Cell -->
 		<div
-			class="row-span-1 bg-green-500 row-start-3 w-[265px] h-[45px] rounded-br-lg border-4 border-amber-400 animate__animated animate__fadeInLeft "
+			class="row-span-1 bg-green-500 row-start-3 w-[265px] h-[45px] rounded-br-lg border-4 border-amber-400 animate__animated animate__fadeInLeft"
 		>
 			<p id="enemyHP">HP: {{ enemy.HP if enemy else '' }}</p>
 		</div>
 		<!-- Enemy Portrait Cell -->
-		<div class="col-start-3 row-start-1 row-span-3 col-span-2 text-neutral-900">
+		<div
+			class="col-start-3 row-start-1 row-span-3 col-span-2 text-neutral-900"
+		>
 			{% if enemy %}
 			<!-- Assuming enemy images are stored as static/images/enemies/{Enemy_Name}.png -->
-			<img id="enemyImg" src="{{ url_for('static', filename='images/manananggal.png') }}" alt="{{ enemy.name }} portrait" class="animate__animated animate__fadeIn">
+			<img
+				id="enemyImg"
+				src="{{ url_for('static', filename='images/manananggal.png') }}"
+				alt="{{ enemy.name }} portrait"
+				class="animate__animated animate__fadeIn"
+			/>
 			{% else %}
 			<p>No enemy encountered.</p>
 			{% endif %}
@@ -35,7 +49,8 @@
 			{% if enemy %}
 			<!-- Assuming enemy images are stored as static/images/enemies/{Enemy_Name}.png -->
 			<img src="{{ url_for('static', filename='images/enemies/' ~
-			enemy.name|replace(" ", "_") ~ '.png') }}" alt="Player Portrait"> {% else %}
+			enemy.name|replace(" ", "_") ~ '.png') }}" alt="Player Portrait"> {%
+			else %}
 			<p>No enemy encountered.</p>
 			{% endif %}
 		</div>
@@ -73,10 +88,15 @@
 					</button>
 				</div>
 				<div class="grid grid-rows-2 gap-4 ml-[35px]">
-					<p id="playerHP" class="bg-green-500 w-[250px] rounded text-neutral-100">
+					<p
+						id="playerHP"
+						class="bg-green-500 w-[250px] rounded text-neutral-100"
+					>
 						HP: {{ player.HP if player else '' }}
 					</p>
-					<p class="bg-blue-400 w-[250px] rounded text-neutral-100">MP</p>
+					<p class="bg-blue-400 w-[250px] rounded text-neutral-100">
+						MP
+					</p>
 				</div>
 			</div>
 		</div>
@@ -98,7 +118,9 @@
 
 			// If enemy HP reaches 0, redirect player to explore.html instead of game.html
 			if (enemyHP === 0) {
-				document.getElementById("enemyImg").classList.remove("animate__headShake");
+				document
+					.getElementById("enemyImg")
+					.classList.remove("animate__headShake");
 				void enemyImg.offsetWidth;
 				enemyImg.classList.add("animate__flipOutX");
 				document.getElementById(
@@ -106,7 +128,8 @@
 				).innerText = `${data.enemy.name} has been defeated!`;
 				setTimeout(() => {
 					// Redirect to explore with the current location parameter
-					window.location.href = "{{ url_for('explore') }}?location={{ location }}";
+					window.location.href =
+						"{{ url_for('explore') }}?location={{ location }}";
 				}, 2000); // 2-second delay before redirecting
 			}
 		}
@@ -128,9 +151,10 @@
 		if (data.battle_over === true) {
 			console.log("Battle is over, redirecting...");
 			setTimeout(() => {
-				// Redirect to game page when battle is over (like when running away)
-				window.location.href = "{{ url_for('game') }}";
-			}, 1500);
+				// Redirect to explore with the current location parameter
+				window.location.href =
+					"{{ url_for('explore') }}?location={{ location }}";
+			}, 1000);
 		}
 	}
 
@@ -148,35 +172,38 @@
 			})
 			.catch((err) => console.error(err));
 	}
-		// Event listener for the Fight button
-		document.getElementById("fightButton").addEventListener("click", function () {
+	// Event listener for the Fight button
+	document
+		.getElementById("fightButton")
+		.addEventListener("click", function () {
 			console.log("Fight button clicked.");
-			
+
 			const enemyImg = document.getElementById("enemyImg");
 			if (enemyImg) {
 				console.log("Enemy image found:", enemyImg);
-				
+
 				// Remove the animation class and log the action
 				enemyImg.classList.remove("animate__headShake");
 				enemyImg.classList.remove("animate__fadeIn");
 				console.log("Removed 'animate__headShake' class.");
-				
+
 				// Force a reflow and log it
 				void enemyImg.offsetWidth;
-				console.log("Forced reflow by reading offsetWidth:", enemyImg.offsetWidth);
-				
+				console.log(
+					"Forced reflow by reading offsetWidth:",
+					enemyImg.offsetWidth
+				);
+
 				// Add the animation class and log the action
 				enemyImg.classList.add("animate__headShake");
 				console.log("Added 'animate__headShake' class.");
 			} else {
 				console.error("Enemy image with id 'enemyImg' not found!");
 			}
-			
+
 			// Process the battle action
 			processBattleAction("{{ url_for('battle_attack') }}");
-	});
-
-
+		});
 
 	// Event listener for the Defend button
 	document
