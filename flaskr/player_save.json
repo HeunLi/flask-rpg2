@@ -1,11 +1,11 @@
 {
-    "class": "Ranger",
-    "HP": 52.0,
-    "ATK": 8.0,
-    "DEF": 8.0,
-    "LVL": 4,
-    "EXP": 200,
-    "MAX_HP": 52.0,
+    "class": "Swordsman",
+    "HP": 35.0,
+    "ATK": 6.0,
+    "DEF": 7.0,
+    "LVL": 2,
+    "EXP": 0,
+    "MAX_HP": 35.0,
     "inventory": {
         "weapons": [
             {
@@ -23,10 +23,7 @@
                 "heal": 0.5
             },
             {
-                "name": "Herbs"
-            },
-            {
-                "name": "Forest Boss Trophy"
+                "name": "Lucky Feather"
             }
         ]
     },
@@ -35,5 +32,6 @@
         "ATK": 2
     },
     "gold": 100,
-    "username": "Qwerty"
+    "username": "Spring Valley",
+    "victory": true
 }
