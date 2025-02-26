@@ -165,10 +165,17 @@ def explore():
             save_world(world_state)
             return redirect(url_for("battle", location=location, enemy=enemy))
 
+    # image for location
+    location_image = f"images/{location.lower()}.jpg"
+
     # if enemy is none meaning area is cleared
     if enemy is None:
         return render_template(
-            "game/explore.html", player=player, location=location, cleared_area=True
+            "game/explore.html",
+            player=player,
+            location=location,
+            cleared_area=True,
+            location_image=location_image,
         )
 
     # if location not in defeated_enemies meaning location has not been visited then we init it with an empty defeated enemy list
@@ -176,7 +183,11 @@ def explore():
         world_state["defeated_enemies"][location] = []
 
     return render_template(
-        "game/explore.html", player=player, location=location, cleared_area=False
+        "game/explore.html",
+        player=player,
+        location=location,
+        cleared_area=False,
+        location_image=location_image,
     )
 
 
