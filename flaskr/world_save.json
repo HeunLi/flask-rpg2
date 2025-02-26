@@ -1,5 +1,20 @@
 {
-    "defeated_enemies": {},
-    "visited_areas": [],
+    "defeated_enemies": {
+        "Forest": [
+            "Kapri",
+            "Diwata",
+            "Diwata",
+            "Diwata",
+            "Diwata",
+            "Diwata",
+            "Diwata",
+            "Big Boss",
+            "Tikbalang",
+            "Tikbalang"
+        ]
+    },
+    "visited_areas": [
+        "Forest"
+    ],
     "current_battle": {}
 }

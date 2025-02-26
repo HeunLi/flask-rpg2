@@ -258,6 +258,16 @@ def calculate_damage(attacker, defender, weapon_bonus=0):
 
     return raw_damage, damage_reduction, final_damage
 
+def add_drops(player, enemy):
+    drop = random.choice(enemy["DROPS"])
+    if drop["type"] == "weapon":
+        player["inventory"]["weapons"].append(
+            {"name": drop["name"], "ATK": drop["ATK"]}
+        )
+        print(f"\nThe enemy dropped a {drop['name']} (Weapon, ATK: {drop['ATK']})!")
+    else:
+        player["inventory"]["items"].append({"name": drop["name"]})
+        print(f"\nThe enemy dropped a {drop['name']} (Item)!")
 
 def add_experience(player, amount):
     player["EXP"] = player.get("EXP", 0) + amount

@@ -11,7 +11,7 @@ from utils.world import (
     update_world_state,
 )
 from utils.game_logic import get_class_data
-from utils.battle import calculate_damage, add_experience, encounter_enemies
+from utils.battle import calculate_damage, add_experience, encounter_enemies, add_drops
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -274,8 +274,12 @@ def battle_attack():
         enemy["HP"] = 0  # Ensure enemy HP does not go negative
         message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
-        add_experience(player, enemy["EXP_DROP"])
+        
+        # Add drop logic
+        add_drops(player, enemy)
 
+        add_experience(player, enemy["EXP_DROP"])
+        
         # Save progress
         save_world(world_state)
         save_player(player)
