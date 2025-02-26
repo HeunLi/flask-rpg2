@@ -8,8 +8,8 @@
 ~ UI Improvements - ✅ 
 ~ Change Transition to orange colors - ✅
 ~ revamp UI of game.html - ✅
+~ Add a paragraph by paragraph delay on story scene - ✅
 ~ 
 ~ Video Background on Game Start Menu - xxx
 ~ When Leveling up add a popup with increased stats - xxx
-~ Add a paragraph by paragraph delay on story scene
 ~ ENEMY DROPS - xxx

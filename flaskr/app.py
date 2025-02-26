@@ -230,7 +230,7 @@ def battle():
     location = request.args.get("location", None)
     player = load_player()
     enemy = None
-    
+
     if location:
         world_state = load_world()
         if location not in world_state["defeated_enemies"]:
@@ -246,7 +246,9 @@ def battle():
                 world_state["current_battle"] = {"enemy": enemy, "area": location}
                 save_world(world_state)
 
-    return render_template("game/battle.html", location=location, enemy=enemy, player=player)
+    return render_template(
+        "game/battle.html", location=location, enemy=enemy, player=player
+    )
 
 
 @app.route("/battle/attack", methods=["POST"])
@@ -274,12 +276,12 @@ def battle_attack():
         enemy["HP"] = 0  # Ensure enemy HP does not go negative
         message += f" {enemy['name']} is defeated!"
         update_world_state(world_state, area, enemy["name"])
-        
+
         # Add drop logic
         add_drops(player, enemy)
 
         add_experience(player, enemy["EXP_DROP"])
-        
+
         # Save progress
         save_world(world_state)
         save_player(player)

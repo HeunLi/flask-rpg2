@@ -83,42 +83,39 @@
 				</div>
 
 				<div class="w-full h-1/2 bg-neutral-500/20 rounded-2xl p-5">
-					<div class="grid grid-cols-4 gap-4 mb-4">
+					<div class="grid grid-cols-4 gap-4 mb-4 h-full">
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Forest'"
-							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-full text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Forest
 						</button>
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Mountains'"
-							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-full text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Mountain
 						</button>
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Cave'"
-							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-full text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Cave
 						</button>
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Swamp'"
-							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-full text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Swamp
 						</button>
-					</div>
-
-					<div class="grid grid-cols-2 gap-4">
 						<button
 							id="merchantButton"
-							class="py-3 px-5 w-full h-[138px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-full text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700 col-span-2"
 						>
 							Merchant
 						</button>
 						<button
-							class="bagButton py-3 px-5 w-full h-[138px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="bagButton py-3 px-5 w-full h-full text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700 col-span-2"
 						>
 							Inventory
 						</button>
