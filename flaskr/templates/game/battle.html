@@ -45,7 +45,7 @@
 			<!-- Assuming enemy images are stored as static/images/enemies/{Enemy_Name}.png -->
 			<img
 				id="enemyImg"
-				src="{{ url_for('static', filename='images/manananggal.png') }}"
+				src="{{ url_for('static', filename='images/' ~ enemy.name|lower ~ '.png') }}"
 				alt="{{ enemy.name }} portrait"
 				class="animate__animated animate__fadeIn"
 			/>
