@@ -1,62 +1,47 @@
 {
-	"class": "Swordsman",
-	"HP": 65.0,
-	"ATK": 9.0,
-	"DEF": 10.0,
-	"LVL": 5,
-	"EXP": 400,
-	"MAX_HP": 65.0,
-	"inventory": {
-		"weapons": [
-			{
-				"name": "Basic Sword",
-				"ATK": 2
-			},
-			{
-				"name": "Nature Staff",
-				"ATK": 3
-			},
-			{
-				"name": "Nature Staff",
-				"ATK": 3
-			},
-			{
-				"name": "Hoof Blade",
-				"ATK": 4
-			}
-		],
-		"items": [
-			{
-				"name": "Mystic Acorn"
-			},
-			{
-				"name": "Healing Herb"
-			},
-			{
-				"name": "Healing Herb"
-			},
-			{
-				"name": "Healing Herb"
-			},
-			{
-				"name": "Healing Herb"
-			},
-			{
-				"name": "Forest Boss Trophy"
-			},
-			{
-				"name": "Lucky Feather"
-			},
-			{
-				"name": "Health Potion",
-				"heal": 10
-			}
-		]
-	},
-	"equipped_weapon": {
-		"name": "Hoof Blade",
-		"ATK": 4
-	},
-	"gold": 100,
-	"username": "Power Ranger"
+    "class": "Ranger",
+    "HP": 52.0,
+    "ATK": 8.0,
+    "DEF": 8.0,
+    "LVL": 4,
+    "EXP": 200,
+    "MAX_HP": 52.0,
+    "inventory": {
+        "weapons": [
+            {
+                "name": "Basic Bow",
+                "ATK": 2
+            },
+            {
+                "name": "Wooden Sword",
+                "ATK": 3
+            },
+            {
+                "name": "Hoof Blade",
+                "ATK": 4
+            }
+        ],
+        "items": [
+            {
+                "name": "Small Potion",
+                "heal": 0.25
+            },
+            {
+                "name": "Health Potion",
+                "heal": 0.5
+            },
+            {
+                "name": "Herbs"
+            },
+            {
+                "name": "Forest Boss Trophy"
+            }
+        ]
+    },
+    "equipped_weapon": {
+        "name": "Basic Bow",
+        "ATK": 2
+    },
+    "gold": 100,
+    "username": "Qwerty"
 }

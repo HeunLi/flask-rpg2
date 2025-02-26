@@ -158,6 +158,9 @@ def explore():
     enemy = encounter_enemies(location, world_state)
     print(enemy)
 
+    world_state["current_battle"] = {}
+    save_world(world_state)
+
     # added back the 30% chance of encountering an enemy
     if random.random() < 0.3:
         if enemy is not None:

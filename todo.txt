@@ -13,3 +13,5 @@
 ~ 
 ~ Video Background on Game Start Menu - xxx
 ~ When Leveling up add a popup with increased stats - xxx
+~ Battle Bug repeating enemy
+~ Add Enemy attack animation 

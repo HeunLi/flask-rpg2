@@ -1,21 +1,7 @@
 {
-    "defeated_enemies": {
-        "Forest": [
-            "Kapri",
-            "Diwata",
-            "Diwata",
-            "Diwata",
-            "Diwata",
-            "Diwata",
-            "Diwata",
-            "Big Boss",
-            "Tikbalang",
-            "Tikbalang"
-        ],
-        "Mountains": []
-    },
-    "visited_areas": [
-        "Forest"
-    ],
-    "current_battle": {}
+	"defeated_enemies": {
+		"Forest": ["Kapri", "Tikbalang", "Diwata", "Big Boss"]
+	},
+	"visited_areas": ["Forest"],
+	"current_battle": {}
 }

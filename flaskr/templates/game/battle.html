@@ -3,8 +3,16 @@
 %} {% block content %}
 <div class="container mx-auto p-6 text-center h-[750px]">
 	<!-- Slash Effect -->
-	<img id="slashEffect" src="{{ url_for('static', filename='images/slash_effect.gif') }}" 
-	class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50">
+	<img
+		id="slashEffect"
+		src="{{ url_for('static', filename='images/slash_effect.gif') }}"
+		class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50"
+	/>
+	<img
+		id="enemySlashEffect"
+		src="{{ url_for('static', filename='images/slash_effect.gif') }}"
+		class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50 rotate-180"
+	/>
 
 	{% if location %}
 	<h1 class="text-4xl font-bold pixel_font mb-4">
@@ -52,8 +60,12 @@
 		>
 			{% if enemy %}
 			<!-- Assuming enemy images are stored as static/images/enemies/{Enemy_Name}.png -->
-			<img src="{{ url_for('static', filename='images/' ~ player.class|lower ~ '2.png') }}" alt="Player Portrait" class="w-[300px]"> {%
-			else %}
+			<img
+				src="{{ url_for('static', filename='images/' ~ player.class|lower ~ '2.png') }}"
+				alt="Player Portrait"
+				class="w-[300px] animate__animated"
+			/>
+			{% else %}
 			<p>No enemy encountered.</p>
 			{% endif %}
 		</div>
@@ -113,7 +125,7 @@
 	function updateHPStatus(data) {
 		// Add a console log to see what we're getting
 		console.log("updateHPStatus called with:", data);
-		
+
 		if (data.enemy && typeof data.enemy.HP !== "undefined") {
 			let enemyHP = Math.round(data.enemy.HP);
 			if (enemyHP < 0) enemyHP = 0;
@@ -161,20 +173,97 @@
 		}
 	}
 
+	function toggleButtons(disabled) {
+		const buttons = [
+			"fightButton",
+			"defendButton",
+			"bagButton",
+			"runButton",
+		];
+
+		buttons.forEach((buttonId) => {
+			const button = document.getElementById(buttonId);
+			button.disabled = disabled;
+			// Add visual feedback for disabled state
+			if (disabled) {
+				button.classList.add("opacity-50", "cursor-not-allowed");
+			} else {
+				button.classList.remove("opacity-50", "cursor-not-allowed");
+			}
+		});
+	}
+
 	// Helper function to process battle actions for Fight and Defend
 	function processBattleAction(actionUrl) {
+		// Disable buttons at the start of the action
+		toggleButtons(true);
+
 		fetch(actionUrl, {
 			method: "POST",
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				// Update the battle message and HP bars
-				document.getElementById("battleMessage").innerText =
-					data.message;
+				const enemyImg = document.getElementById("enemyImg");
+				const slashEffect = document.getElementById("slashEffect");
+
+				if (enemyImg) {
+					enemyImg.classList.remove("animate__headShake");
+					void enemyImg.offsetWidth;
+					enemyImg.classList.add("animate__headShake");
+					slashEffect.classList.remove("hidden");
+
+					document.getElementById("battleMessage").innerText =
+						data.message.split("and")[0];
+
+					setTimeout(() => {
+						slashEffect.classList.add("hidden");
+
+						if (data.message.includes("counterattacked")) {
+							setTimeout(() => {
+								const playerImg = document.querySelector(
+									"img[alt='Player Portrait']"
+								);
+								const enemySlashEffect =
+									document.getElementById("enemySlashEffect");
+
+								if (playerImg) {
+									playerImg.classList.remove(
+										"animate__headShake"
+									);
+									void playerImg.offsetWidth;
+									playerImg.classList.add(
+										"animate__headShake"
+									);
+									enemySlashEffect.classList.remove("hidden");
+
+									setTimeout(() => {
+										enemySlashEffect.classList.add(
+											"hidden"
+										);
+										document.getElementById(
+											"battleMessage"
+										).innerText = data.message;
+										// Re-enable buttons after counter-attack animation
+										toggleButtons(false);
+									}, 500);
+								}
+							}, 1000);
+						} else {
+							// Re-enable buttons if there's no counter-attack
+							toggleButtons(false);
+						}
+					}, 500);
+				}
+
 				updateHPStatus(data);
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				console.error(err);
+				// Re-enable buttons in case of error
+				toggleButtons(false);
+			});
 	}
+
 	// Event listener for the Fight button
 	document
 		.getElementById("fightButton")
@@ -186,19 +275,16 @@
 			if (enemyImg) {
 				console.log("Enemy image found:", enemyImg);
 
-				// Remove the animation class and log the action
 				enemyImg.classList.remove("animate__headShake");
 				enemyImg.classList.remove("animate__fadeIn");
 				console.log("Removed 'animate__headShake' class.");
 
-				// Force a reflow and log it
 				void enemyImg.offsetWidth;
 				console.log(
 					"Forced reflow by reading offsetWidth:",
 					enemyImg.offsetWidth
 				);
 
-				// Add the animation class and log the action
 				enemyImg.classList.add("animate__headShake");
 				slashEffect.classList.remove("hidden");
 				setTimeout(() => {
@@ -209,18 +295,15 @@
 				console.error("Enemy image with id 'enemyImg' not found!");
 			}
 
-			// Process the battle action
 			processBattleAction("{{ url_for('battle_attack') }}");
 		});
 
-	// Event listener for the Defend button
 	document
 		.getElementById("defendButton")
 		.addEventListener("click", function () {
 			processBattleAction("{{ url_for('battle_defend') }}");
 		});
 
-	// Event listener for the Run button with redirection on successful escape
 	document
 		.getElementById("runButton")
 		.addEventListener("click", function (e) {
@@ -228,12 +311,11 @@
 			fetch("{{ url_for('battle_run') }}", { method: "POST" })
 				.then((response) => response.json())
 				.then((data) => {
-					document.getElementById("battleMessage").innerText = data.message;
-					
-					// Log values to console for debugging
+					document.getElementById("battleMessage").innerText =
+						data.message;
+
 					console.log("Battle over:", data.battle_over);
-					
-					// If battle is over, redirect after a short delay
+
 					if (data.battle_over === true) {
 						console.log("Redirecting to game...");
 						setTimeout(() => {
