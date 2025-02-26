@@ -1,20 +1,28 @@
 {
     "defeated_enemies": {
-        "Forest": [
-            "Big Boss"
-        ],
-        "Mountains": [
-            "Big Boss"
-        ],
-        "Cave": [
-            "Big Boss"
-        ],
-        "Swamp": [
-            "Big Boss"
-        ]
+        "Forest": []
     },
-    "visited_areas": [
-        "Forest"
-    ],
-    "current_battle": {}
+    "visited_areas": [],
+    "current_battle": {
+        "enemy": {
+            "name": "Diwata",
+            "HP": 13,
+            "ATK": 5,
+            "DEF": 4,
+            "EXP_DROP": 100,
+            "MAX_HP": 18,
+            "DROPS": [
+                {
+                    "name": "Herbs",
+                    "type": "item"
+                },
+                {
+                    "name": "Nature Staff",
+                    "type": "weapon",
+                    "ATK": 3
+                }
+            ]
+        },
+        "area": "Forest"
+    }
 }

@@ -1,7 +1,7 @@
 <!-- templates/battle.html -->
 {% extends "base.html" %} {% block title %} Battle - {{ location }}{% endblock
 %} {% block content %}
-<div class="container mx-auto p-6 text-center h-[750px]">
+<div class="container mx-auto p-6 text-center h-[750px] fadeIn">
 	<!-- Slash Effect -->
 	<img
 		id="slashEffect"
@@ -12,6 +12,11 @@
 		id="enemySlashEffect"
 		src="{{ url_for('static', filename='images/slash_effect.gif') }}"
 		class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50 rotate-180 hue-rotate-180"
+	/>
+	<img
+		id="defendEffect"
+		src="{{ url_for('static', filename='images/shield.gif') }}"
+		class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50"
 	/>
 
 	{% if location %}
@@ -309,6 +314,33 @@
 	document
 		.getElementById("defendButton")
 		.addEventListener("click", function () {
+			const playerImg = document.querySelector(
+				"img[alt='Player Portrait']"
+			);
+			const defendEffect = document.getElementById("defendEffect");
+			const enemySlashEffect =
+				document.getElementById("enemySlashEffect");
+
+			if (playerImg) {
+				// Show defend effect first
+				defendEffect.classList.remove("hidden");
+				setTimeout(() => {
+					defendEffect.classList.add("hidden");
+
+					// Enemy counter-attack animation
+					setTimeout(() => {
+						playerImg.classList.remove("animate__headShake");
+						void playerImg.offsetWidth;
+						playerImg.classList.add("animate__headShake");
+						enemySlashEffect.classList.remove("hidden");
+
+						setTimeout(() => {
+							enemySlashEffect.classList.add("hidden");
+						}, 500);
+					}, 800);
+				}, 2000);
+			}
+
 			processBattleAction("{{ url_for('battle_defend') }}");
 		});
 
@@ -331,16 +363,13 @@
 		updateHPStatus(data);
 
 		if (data.battle_over) {
-			// Hide battle buttons
 			document.getElementById("battleControls").style.display = "none";
 
 			if (data.victory) {
-				// Redirect to victory page if game is completed
 				setTimeout(() => {
 					window.location.href = "{{ url_for('victory') }}";
 				}, 2000);
 			} else {
-				// Normal battle end redirect
 				setTimeout(() => {
 					window.location.href =
 						"{{ url_for('explore') }}?location={{ location }}";

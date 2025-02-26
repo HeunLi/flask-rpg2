@@ -156,6 +156,9 @@ def explore():
     player = load_player()
     world_state = load_world()
 
+    world_state["current_battle"] = {}
+    save_world(world_state)
+
     if check_victory_condition(world_state):
         player["victory"] = True
         save_player(player)
@@ -170,9 +173,6 @@ def explore():
     # encounter enemy only if you haven't cleared the area
     enemy = encounter_enemies(location, world_state)
     print(enemy)
-
-    world_state["current_battle"] = {}
-    save_world(world_state)
 
     # added back the 30% chance of encountering an enemy
     if random.random() < 0.3:

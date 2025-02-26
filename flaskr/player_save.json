@@ -1,11 +1,11 @@
 {
     "class": "Swordsman",
-    "HP": 35.0,
-    "ATK": 6.0,
-    "DEF": 7.0,
-    "LVL": 2,
+    "HP": 18,
+    "ATK": 5,
+    "DEF": 6,
+    "LVL": 1,
     "EXP": 0,
-    "MAX_HP": 35.0,
+    "MAX_HP": 25,
     "inventory": {
         "weapons": [
             {
@@ -21,9 +21,6 @@
             {
                 "name": "Health Potion",
                 "heal": 0.5
-            },
-            {
-                "name": "Lucky Feather"
             }
         ]
     },
@@ -32,6 +29,5 @@
         "ATK": 2
     },
     "gold": 100,
-    "username": "Spring Valley",
-    "victory": true
+    "username": "qwe"
 }
