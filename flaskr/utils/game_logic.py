@@ -47,3 +47,19 @@ def get_class_data(choice):
         player["gold"] = 100
         return player
     return None
+
+
+def check_victory_condition(world_state):
+    """Check if all bosses have been defeated in all areas"""
+    areas = ["Forest", "Mountains", "Cave", "Swamp"]
+    for area in areas:
+        # Skip if area hasn't been visited
+        if area not in world_state["defeated_enemies"]:
+            return False
+
+        # Check if boss was defeated in this area
+        area_defeats = world_state["defeated_enemies"][area]
+        if "Big Boss" not in area_defeats:
+            return False
+
+    return True

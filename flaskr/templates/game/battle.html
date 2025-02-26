@@ -11,7 +11,7 @@
 	<img
 		id="enemySlashEffect"
 		src="{{ url_for('static', filename='images/slash_effect.gif') }}"
-		class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50 rotate-180"
+		class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50 rotate-180 hue-rotate-180"
 	/>
 
 	{% if location %}
@@ -33,7 +33,8 @@
 		</div>
 		<!-- Enemy Health Cell -->
 		<div
-			class="row-span-1 bg-green-500 row-start-3 w-[265px] h-[45px] rounded-br-lg border-4 border-amber-400 animate__animated animate__fadeInLeft"
+			class="row-span-1 row-start-3 w-[265px] h-[45px] rounded-br-lg border-4 border-amber-400 animate__animated animate__fadeInLeft"
+			style="background-color: {{ '#d97706' if enemy.HP < enemy.MAX_HP else '#22c55e' }};"
 		>
 			<p id="enemyHP">HP: {{ enemy.HP if enemy else '' }}</p>
 		</div>
@@ -105,12 +106,14 @@
 				<div class="grid grid-rows-2 gap-4 ml-[35px]">
 					<p
 						id="playerHP"
-						class="bg-green-500 w-[250px] rounded text-neutral-100"
+						class="w-[250px] rounded text-neutral-100"
+						style="background-color: {{ 'red' if player.HP < player.MAX_HP / 2 else '#22c55e' }};"
 					>
 						HP: {{ player.HP if player else '' }}
 					</p>
 					<p class="bg-blue-400 w-[250px] rounded text-neutral-100">
-						MP
+						EXP: {{ player.EXP if player else '' }}/{{ player.LVL *
+						100 }}
 					</p>
 				</div>
 			</div>
@@ -123,15 +126,18 @@
 <script>
 	// Function to update the HP displays and redirect if the player is defeated
 	function updateHPStatus(data) {
-		// Add a console log to see what we're getting
 		console.log("updateHPStatus called with:", data);
 
 		if (data.enemy && typeof data.enemy.HP !== "undefined") {
 			let enemyHP = Math.round(data.enemy.HP);
 			if (enemyHP < 0) enemyHP = 0;
-			document.getElementById("enemyHP").innerText = "HP: " + enemyHP;
+			const enemyHPElement = document.getElementById("enemyHP");
+			enemyHPElement.innerText = "HP: " + enemyHP;
 
-			// If enemy HP reaches 0, redirect player to explore.html instead of game.html
+			// Update enemy HP color dynamically
+			enemyHPElement.parentElement.style.backgroundColor =
+				enemyHP < data.enemy.MAX_HP / 2 ? "#d97706" : "#22c55e";
+
 			if (enemyHP === 0) {
 				document
 					.getElementById("enemyImg")
@@ -142,17 +148,21 @@
 					"battleMessage"
 				).innerText = `${data.enemy.name} has been defeated!`;
 				setTimeout(() => {
-					// Redirect to explore with the current location parameter
 					window.location.href =
 						"{{ url_for('explore') }}?location={{ location }}";
-				}, 2000); // 2-second delay before redirecting
+				}, 2000);
 			}
 		}
 
 		if (data.player && typeof data.player.HP !== "undefined") {
 			let playerHP = Math.round(data.player.HP);
 			if (playerHP < 0) playerHP = 0;
-			document.getElementById("playerHP").innerText = "HP: " + playerHP;
+			const playerHPElement = document.getElementById("playerHP");
+			playerHPElement.innerText = "HP: " + playerHP;
+
+			// Update player HP color dynamically
+			playerHPElement.style.backgroundColor =
+				playerHP < data.player.MAX_HP / 2 ? "#d97706" : "#22c55e";
 
 			// If player's HP is 0, redirect after delay
 			if (playerHP === 0) {
@@ -195,7 +205,6 @@
 
 	// Helper function to process battle actions for Fight and Defend
 	function processBattleAction(actionUrl) {
-		// Disable buttons at the start of the action
 		toggleButtons(true);
 
 		fetch(actionUrl, {
@@ -243,13 +252,13 @@
 										document.getElementById(
 											"battleMessage"
 										).innerText = data.message;
-										// Re-enable buttons after counter-attack animation
+										updateBattleUI(data);
 										toggleButtons(false);
 									}, 500);
 								}
 							}, 1000);
 						} else {
-							// Re-enable buttons if there's no counter-attack
+							updateBattleUI(data);
 							toggleButtons(false);
 						}
 					}, 500);
@@ -259,7 +268,6 @@
 			})
 			.catch((err) => {
 				console.error(err);
-				// Re-enable buttons in case of error
 				toggleButtons(false);
 			});
 	}
@@ -311,30 +319,34 @@
 			fetch("{{ url_for('battle_run') }}", { method: "POST" })
 				.then((response) => response.json())
 				.then((data) => {
-					document.getElementById("battleMessage").innerText =
-						data.message;
-
-					console.log("Battle over:", data.battle_over);
-
-					if (data.battle_over === true) {
-						console.log("Redirecting to game...");
-						setTimeout(() => {
-							window.location.href = "{{ url_for('game') }}";
-						}, 1500);
-					}
+					updateBattleUI(data);
 				})
 				.catch((err) => console.error(err));
 		});
 
-	// Optional: Polling for real-time HP updates every 2 seconds.
-	// (Ideally, create a dedicated endpoint for battle state instead of reusing battle_attack)
-	setInterval(() => {
-		fetch("{{ url_for('battle_attack') }}")
-			.then((response) => response.json())
-			.then((data) => {
-				updateHPStatus(data);
-			})
-			.catch((err) => console.error(err));
-	}, 2000);
+	function updateBattleUI(data) {
+		const battleMessage = document.getElementById("battleMessage");
+		battleMessage.textContent = data.message;
+
+		updateHPStatus(data);
+
+		if (data.battle_over) {
+			// Hide battle buttons
+			document.getElementById("battleControls").style.display = "none";
+
+			if (data.victory) {
+				// Redirect to victory page if game is completed
+				setTimeout(() => {
+					window.location.href = "{{ url_for('victory') }}";
+				}, 2000);
+			} else {
+				// Normal battle end redirect
+				setTimeout(() => {
+					window.location.href =
+						"{{ url_for('explore') }}?location={{ location }}";
+				}, 2000);
+			}
+		}
+	}
 </script>
 {% include "inventory_modal.html" %} {% endblock %}
