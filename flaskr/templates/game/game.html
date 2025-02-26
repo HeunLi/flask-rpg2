@@ -2,7 +2,7 @@
 {% extends "base.html" %} {% block title %}Game{% endblock %} {% block content
 %}
 
-<div class="relative">
+<div class="relative fadeIn">
 	<h1
 		class="absolute top-5 left-1/2 tranform -translate-x-1/2 pixel_font font-medium text-4xl"
 	>
@@ -86,25 +86,25 @@
 					<div class="grid grid-cols-4 gap-4 mb-4">
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Forest'"
-							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Forest
 						</button>
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Mountains'"
-							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Mountain
 						</button>
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Cave'"
-							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Cave
 						</button>
 						<button
 							onclick="window.location.href='{{ url_for('explore') }}?location=Swamp'"
-							class="py-3 px-5 w-full h-[120px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-[138px] text-lg font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Swamp
 						</button>
@@ -113,12 +113,12 @@
 					<div class="grid grid-cols-2 gap-4">
 						<button
 							id="merchantButton"
-							class="py-3 px-5 w-full h-[120px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="py-3 px-5 w-full h-[138px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Merchant
 						</button>
 						<button
-							class="bagButton py-3 px-5 w-full h-[120px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
+							class="bagButton py-3 px-5 w-full h-[138px] text-2xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center hover:bg-amber-700"
 						>
 							Inventory
 						</button>

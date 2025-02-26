@@ -42,42 +42,43 @@
 	class="relative hidden fadeIn min-h-screen bg-neutral-900 flex flex-col items-center justify-center p-8"
 	id="storyScene"
 >
-	<div class="max-w-2xl text-center space-y-8">
+	<div class="max-w-2xl text-center">
 		<h1 class="text-5xl pixel_font text-amber-500 mb-8">
 			The Legend Begins...
 		</h1>
 
 		<div class="story-text space-y-6 text-lg text-gray-300">
-			<p class="animate-fade-in">
+			<p class="animate-fade-in delay-1200">
 				In the mystical archipelago of ancient Philippines, darkness has
 				begun to spread across the land. The once-peaceful realms of the
 				Forest, Mountains, Cave, and Swamp have fallen into chaos.
 			</p>
 
-			<p class="animate-fade-in delay-300">
+			<p class="animate-fade-in delay-3000">
 				The Diwatas, ancient guardian spirits of the forest, have grown
 				hostile. Tikbalangs roam the wilderness unchecked, while Kapres
 				terrorize travelers from their mighty trees.
 			</p>
 
-			<p class="animate-fade-in delay-600">
+			<p class="animate-fade-in delay-5000">
 				As ancient prophecies foretold, a hero must rise - one who can
 				restore balance to these troubled lands and bring peace to both
 				the mortal and spirit worlds.
 			</p>
 
-			<p class="animate-fade-in delay-900">
+			<p class="animate-fade-in delay-6000">
 				You have been chosen. The path ahead is treacherous, but destiny
 				awaits...
 			</p>
 		</div>
-
-		<button
-			onclick="window.location.href='start'"
-			class="mt-8 bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out animate-bounce"
-		>
-			Begin Your Journey
-		</button>
+		<div class="animate-fade-in delay-6000">
+			<button
+				onclick="window.location.href='start'"
+				class="mt-8 bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out animate-bounce"
+			>
+				Begin Your Journey
+			</button>
+		</div>
 	</div>
 </div>
 
@@ -101,6 +102,7 @@
 
 		const startMenu = document.getElementById("startMenu");
 		const storyScene = document.getElementById("storyScene");
+		const beginButton = document.getElementById("beginButton");
 		startMenu.classList.remove("flex");
 
 		startMenu.classList.add("hidden");

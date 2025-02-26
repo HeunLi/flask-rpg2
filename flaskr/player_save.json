@@ -1,11 +1,11 @@
 {
-    "class": "Wizard",
-    "HP": 65.0,
-    "ATK": 9.0,
-    "DEF": 10.0,
-    "LVL": 5,
+    "class": "Swordsman",
+    "HP": 22,
+    "ATK": 5,
+    "DEF": 6,
+    "LVL": 1,
     "EXP": 0,
-    "MAX_HP": 65.0,
+    "MAX_HP": 25,
     "inventory": {
         "weapons": [
             {
@@ -25,5 +25,5 @@
         "ATK": 2
     },
     "gold": 100,
-    "username": "Spring Valley"
+    "username": "Power Ranger"
 }

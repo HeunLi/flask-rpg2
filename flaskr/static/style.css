@@ -91,3 +91,35 @@ body {
 .delay-1200 {
 	animation-delay: 1200ms;
 }
+
+.delay-2000 {
+	animation-delay: 2000ms;
+}
+
+.delay-3000 {
+	animation-delay: 3000ms;
+}
+
+.delay-4000 {
+	animation-delay: 4000ms;
+}
+
+.delay-5000 {
+	animation-delay: 5000ms;
+}
+
+.delay-6000 {
+	animation-delay: 6000ms;
+}
+
+.delay-7000 {
+	animation-delay: 7000ms;
+}
+
+.delay-8000 {
+	animation-delay: 8000ms;
+}
+
+.delay-9000 {
+	animation-delay: 9000ms;
+}
