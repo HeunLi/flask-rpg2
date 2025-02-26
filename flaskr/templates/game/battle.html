@@ -2,6 +2,10 @@
 {% extends "base.html" %} {% block title %} Battle - {{ location }}{% endblock
 %} {% block content %}
 <div class="container mx-auto p-6 text-center h-[750px]">
+	<!-- Slash Effect -->
+	<img id="slashEffect" src="{{ url_for('static', filename='images/slash_effect.gif') }}" 
+	class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-auto z-50">
+
 	{% if location %}
 	<h1 class="text-4xl font-bold pixel_font mb-4">
 		You have encountered an
@@ -44,12 +48,11 @@
 
 		<!-- Player Portrait Cell -->
 		<div
-			class="bg-neutral-100 col-start-6 row-start-3 row-span-3 text-neutral-900"
+			class="col-start-6 row-start-3 row-span-1 col-span-2 text-neutral-900 mt-1"
 		>
 			{% if enemy %}
 			<!-- Assuming enemy images are stored as static/images/enemies/{Enemy_Name}.png -->
-			<img src="{{ url_for('static', filename='images/enemies/' ~
-			enemy.name|replace(" ", "_") ~ '.png') }}" alt="Player Portrait"> {%
+			<img src="{{ url_for('static', filename='images/' ~ player.class|lower ~ '2.png') }}" alt="Player Portrait" class="w-[300px]"> {%
 			else %}
 			<p>No enemy encountered.</p>
 			{% endif %}
@@ -179,6 +182,7 @@
 			console.log("Fight button clicked.");
 
 			const enemyImg = document.getElementById("enemyImg");
+			const slashEffect = document.getElementById("slashEffect");
 			if (enemyImg) {
 				console.log("Enemy image found:", enemyImg);
 
@@ -196,6 +200,10 @@
 
 				// Add the animation class and log the action
 				enemyImg.classList.add("animate__headShake");
+				slashEffect.classList.remove("hidden");
+				setTimeout(() => {
+					slashEffect.classList.add("hidden");
+				}, 500);
 				console.log("Added 'animate__headShake' class.");
 			} else {
 				console.error("Enemy image with id 'enemyImg' not found!");

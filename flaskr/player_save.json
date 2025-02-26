@@ -1,11 +1,11 @@
 {
-    "class": "Swordsman",
-    "HP": 18.0,
-    "ATK": 7.0,
-    "DEF": 8.0,
-    "LVL": 3,
-    "EXP": 100,
-    "MAX_HP": 45.0,
+    "class": "Wizard",
+    "HP": 65.0,
+    "ATK": 9.0,
+    "DEF": 10.0,
+    "LVL": 5,
+    "EXP": 0,
+    "MAX_HP": 65.0,
     "inventory": {
         "weapons": [
             {
@@ -17,10 +17,6 @@
             {
                 "name": "Small Potion",
                 "heal": 0.25
-            },
-            {
-                "name": "Health Potion",
-                "heal": 0.5
             }
         ]
     },
