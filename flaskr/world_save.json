@@ -3,11 +3,17 @@
         "Forest": [
             "Kapri",
             "Diwata",
-            "Tikbalang"
-        ]
+            "Tikbalang",
+            "Big Boss"
+        ],
+        "Mountains": [
+            "Tik-tik"
+        ],
+        "Cave": []
     },
     "visited_areas": [
-        "Forest"
+        "Forest",
+        "Mountains"
     ],
     "current_battle": {}
 }

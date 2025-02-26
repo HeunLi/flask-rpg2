@@ -163,7 +163,7 @@ def explore():
         if enemy is not None:
             world_state["current_battle"] = {"enemy": enemy, "area": location}
             save_world(world_state)
-            return redirect(url_for("game/battle.html", location=location, enemy=enemy))
+            return redirect(url_for("battle", location=location, enemy=enemy))
 
     # if enemy is none meaning area is cleared
     if enemy is None:
@@ -212,26 +212,30 @@ def sleep():
 
 
 # -------------------------------------------
-# ... BATTLE ENDPOINTS ...
+# ... BATTLE ENDPOINTS ......................
 # --------------------------------------------
-
-
 @app.route("/battle")
 def battle():
     location = request.args.get("location", None)
+    player = load_player()
     enemy = None
+    
     if location:
         world_state = load_world()
         if location not in world_state["defeated_enemies"]:
             world_state["defeated_enemies"][location] = []
 
-        enemy = encounter_enemies(location, world_state)
+        # Use the enemy from current_battle if it exists
+        current_battle = world_state.get("current_battle", {})
+        if current_battle and current_battle.get("area") == location:
+            enemy = current_battle.get("enemy")
+        else:
+            enemy = encounter_enemies(location, world_state)
+            if enemy:
+                world_state["current_battle"] = {"enemy": enemy, "area": location}
+                save_world(world_state)
 
-        if enemy:
-            world_state["current_battle"] = {"enemy": enemy, "area": location}
-            save_world(world_state)
-
-    return render_template("game/battle.html", location=location, enemy=enemy)
+    return render_template("game/battle.html", location=location, enemy=enemy, player=player)
 
 
 @app.route("/battle/attack", methods=["POST"])

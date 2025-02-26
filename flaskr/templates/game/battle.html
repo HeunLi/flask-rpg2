@@ -88,6 +88,9 @@
 <script>
 	// Function to update the HP displays and redirect if the player is defeated
 	function updateHPStatus(data) {
+		// Add a console log to see what we're getting
+		console.log("updateHPStatus called with:", data);
+		
 		if (data.enemy && typeof data.enemy.HP !== "undefined") {
 			let enemyHP = Math.round(data.enemy.HP);
 			if (enemyHP < 0) enemyHP = 0;
@@ -122,11 +125,12 @@
 		}
 
 		// If battle is over, redirect automatically
-		if (data.battle_over) {
+		if (data.battle_over === true) {
+			console.log("Battle is over, redirecting...");
 			setTimeout(() => {
-				// Redirect to explore with the current location parameter
-				window.location.href = "{{ url_for('explore') }}?location={{ location }}";
-			}, 1000);
+				// Redirect to game page when battle is over (like when running away)
+				window.location.href = "{{ url_for('game') }}";
+			}, 1500);
 		}
 	}
 
@@ -189,11 +193,14 @@
 			fetch("{{ url_for('battle_run') }}", { method: "POST" })
 				.then((response) => response.json())
 				.then((data) => {
-					document.getElementById("battleMessage").innerText =
-						data.message;
-					updateHPStatus(data);
+					document.getElementById("battleMessage").innerText = data.message;
+					
+					// Log values to console for debugging
+					console.log("Battle over:", data.battle_over);
+					
 					// If battle is over, redirect after a short delay
-					if (data.battle_over) {
+					if (data.battle_over === true) {
+						console.log("Redirecting to game...");
 						setTimeout(() => {
 							window.location.href = "{{ url_for('game') }}";
 						}, 1500);
