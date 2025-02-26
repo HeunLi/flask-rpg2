@@ -1,17 +1,23 @@
-{% extends "base.html" %} {% block title %}Game Over{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Victory{% endblock %} {% block
 content %}
 <div
 	class="flex flex-col items-center justify-center h-screen bg-neutral-900 fadeIn"
 >
 	<div class="text-center space-y-6">
-		<h1 class="text-6xl font-bold text-red-600 mb-4">Game Over</h1>
-		<p class="text-2xl text-gray-300 mb-8">
-			Your adventure has come to an end...
+		<h1 class="text-6xl font-bold text-amber-400 mb-4 pixel_font">
+			Victory!
+		</h1>
+		<p class="text-2xl text-gray-300 mb-8 max-w-2xl pixel_font">
+			Congratulations, <span class="text-amber-400">Hero!</span> <br />You
+			have <span class="text-amber-400">save the world</span> and
+			<span class="text-amber-400">your bravery</span> will be
+			<span class="text-amber-400">remembered forever.</span> <br />
+			You have become a <span class="text-amber-400">legend!</span>
 		</p>
 
 		<button
 			onclick="resetGame()"
-			class="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out"
+			class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out"
 		>
 			Reset Game
 		</button>

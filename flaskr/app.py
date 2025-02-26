@@ -10,7 +10,7 @@ from utils.world import (
     load_world,
     update_world_state,
 )
-from utils.game_logic import get_class_data
+from utils.game_logic import get_class_data, check_victory_condition
 from utils.battle import calculate_damage, add_experience, encounter_enemies, add_drops
 
 app = Flask(__name__)
@@ -117,6 +117,11 @@ def game():
     player = load_player()
     world = load_world()
 
+    if check_victory_condition(world):
+        player["victory"] = True
+        save_player(player)
+        return redirect(url_for("victory"))
+
     if player is None:
         return redirect(url_for("start"))
 
@@ -151,15 +156,23 @@ def explore():
     player = load_player()
     world_state = load_world()
 
+    world_state["current_battle"] = {}
+    save_world(world_state)
+
+    if check_victory_condition(world_state):
+        player["victory"] = True
+        save_player(player)
+        return redirect(url_for("victory"))
+
+    if not player["HP"] > 0:
+        return render_template("game/game_over.html")
+
     if location not in ["Forest", "Cave", "Swamp", "Mountains"]:
         return redirect(url_for("game/game.html", player=player))
 
     # encounter enemy only if you haven't cleared the area
     enemy = encounter_enemies(location, world_state)
     print(enemy)
-
-    world_state["current_battle"] = {}
-    save_world(world_state)
 
     # added back the 30% chance of encountering an enemy
     if random.random() < 0.3:
@@ -291,6 +304,19 @@ def battle_attack():
 
         # Remove enemy from battle state
         world_state.pop("current_battle", None)
+
+        if check_victory_condition(world_state):
+            player["victory"] = True
+            save_player(player)
+            return jsonify(
+                {
+                    "message": message + " You have cleared all areas!",
+                    "battle_over": True,
+                    "victory": True,
+                    "player": player,
+                    "enemy": enemy,
+                }
+            )
 
         return jsonify(
             {
@@ -492,6 +518,19 @@ def use_item():
             return jsonify({"error": "Item cannot be used."}), 400
     except ValueError:
         return jsonify({"error": "Invalid input"}), 400
+
+
+@app.route("/victory")
+def victory():
+    player = load_player()
+
+    if player is None:
+        return redirect(url_for("start"))
+
+    if player.get("victory"):
+        return render_template("game/victory.html", player=player)
+
+    return redirect(url_for("game"))
 
 
 if __name__ == "__main__":
