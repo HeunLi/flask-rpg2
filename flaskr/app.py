@@ -469,12 +469,15 @@ def use_item():
         items = player["inventory"]["items"]
         if idx < 0 or idx >= len(items):
             return jsonify({"error": "Invalid item index"}), 400
-        item = items.pop(idx)
+
+        item = items[idx]
         if item["name"] in ["Small Potion", "Health Potion"]:
-            heal_amount = int(player["MAX_HP"] * item["heal"])  # Convert to integer
+            if player["HP"] >= player["MAX_HP"]:
+                return jsonify({"error": "HP is full, cannot use potion!"}), 400
+
+            items.pop(idx)
             heal_amount = int(player["MAX_HP"] * item["heal"])
             old_hp = player["HP"]
-            player["HP"] = min(player["HP"] + heal_amount, player["MAX_HP"])
             player["HP"] = min(player["HP"] + heal_amount, player["MAX_HP"])
             save_player(player)
             return jsonify(
@@ -483,7 +486,7 @@ def use_item():
                 }
             )
         else:
-            return jsonify({"error": "Item effect not implemented."}), 400
+            return jsonify({"error": "Item cannot be used."}), 400
     except ValueError:
         return jsonify({"error": "Invalid input"}), 400
 

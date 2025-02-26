@@ -68,10 +68,19 @@
 				content += `</ul>`;
 				content += `<h3 class="mt-4 font-semibold">Items:</h3><ul>`;
 				data.items.forEach((item, index) => {
+					// Only show Use button for healing items
+					const isUsable = ["Small Potion", "Health Potion"].includes(
+						item.name
+					);
 					content += `<li>${index + 1}. ${item.name} 
-                            <button class="text-sm text-blue-500 ml-2" onclick="useItem(${
-								index + 1
-							})">Use</button></li>`;
+								${
+									isUsable
+										? `<button class="text-sm text-blue-500 ml-2" onclick="useItem(${
+												index + 1
+										  })">Use</button>`
+										: ""
+								}
+								</li>`;
 				});
 				content += `</ul>`;
 				document.getElementById("inventoryContent").innerHTML = content;
