@@ -14,5 +14,6 @@
     "visited_areas": [
         "Forest",
         "Swamp"
-    ]
+    ],
+    "current_battle": {}
 }

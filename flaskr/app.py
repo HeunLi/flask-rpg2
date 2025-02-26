@@ -166,7 +166,7 @@ def explore():
             return redirect(url_for("battle", location=location, enemy=enemy))
 
     # image for location
-    location_image = f"images/{location.lower()}.jpg"
+    location_image = f"images/{location.lower()}.webp"
 
     # if enemy is none meaning area is cleared
     if enemy is None:
