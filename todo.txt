@@ -3,7 +3,7 @@
 3. Battle Animation - John
 4. Battle Character - John
 5. Video Background on Game Start Menu - xxx
-6. Exit Function? - xxx
+6. Exit Function? - ✅
 7. Close Area after defeating boss - ✅
 8. Stats on choosing a class - ✅
 9. UI Improvements - ✅
