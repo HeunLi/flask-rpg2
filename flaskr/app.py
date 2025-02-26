@@ -117,6 +117,11 @@ def game():
     player = load_player()
     world = load_world()
 
+    if check_victory_condition(world):
+        player["victory"] = True
+        save_player(player)
+        return redirect(url_for("victory"))
+
     if player is None:
         return redirect(url_for("start"))
 
@@ -150,6 +155,11 @@ def explore():
 
     player = load_player()
     world_state = load_world()
+
+    if check_victory_condition(world_state):
+        player["victory"] = True
+        save_player(player)
+        return redirect(url_for("victory"))
 
     if not player["HP"] > 0:
         return render_template("game/game_over.html")
