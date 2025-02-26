@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}Explore{% endblock %} {% block
 content %}
 
-<div class="relative">
+<div class="relative fadeIn">
 	<h1
 		class="absolute top-5 left-1/2 tranform -translate-x-1/2 pixel_font font-medium text-4xl"
 	>
@@ -13,9 +13,11 @@ content %}
 			<div
 				class="w-1/2 h-full bg-neutral-500/20 rounded-2xl overflow-hidden p-5"
 			>
-			<img src="{{ url_for('static', filename=location_image) }}" 
-			alt="" 
-			class="w-full h-full object-cover rounded-xl" />
+				<img
+					src="{{ url_for('static', filename=location_image) }}"
+					alt=""
+					class="w-full h-full object-cover rounded-xl"
+				/>
 			</div>
 			<div class="w-1/2 h-full space-y-5">
 				<div
@@ -81,20 +83,20 @@ content %}
 						{% if not cleared_area %}
 						<button
 							onclick="window.location.href='{{ url_for('battle') }}?location={{ location }}'"
-							class="py-3 px-5 w-full h-[120px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+							class="py-3 px-5 w-full h-[137px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
 						>
 							Explore
 						</button>
 						<button
 							onclick="handleSleep()"
-							class="py-3 px-5 w-full h-[120px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+							class="py-3 px-5 w-full h-[137px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
 						>
 							Sleep
 						</button>
 						{% else %}
 						<!-- prettier-ignore -->
 						<div
-							class="col-span-2 text-center text-3xl font-medium pixel_font text-white h-[120px] flex items-center justify-center"
+							class="col-span-2 text-center text-3xl font-medium pixel_font text-white h-[137px] flex items-center justify-center"
 						>
 							You already cleared this area. 
 							<br>Area is Closed.
@@ -102,12 +104,12 @@ content %}
 						{% endif %}
 						<button
 							onclick="window.location.href='{{ url_for('game') }}'"
-							class="py-3 px-5 w-full h-[120px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+							class="py-3 px-5 w-full h-[137px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
 						>
 							Return
 						</button>
 						<button
-							class="bagButton py-3 px-5 w-full h-[120px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
+							class="bagButton py-3 px-5 w-full h-[137px] text-4xl font-medium pixel_font bg-amber-600 text-white rounded-xl text-center"
 						>
 							Inventory
 						</button>

@@ -1,14 +1,15 @@
-1. Explore, Sleep, page/functionality - ✅
-2. Battle Flow - John
-3. Battle Animation - John
-4. Battle Character - John
-5. Video Background on Game Start Menu - xxx
-6. Exit Function? - ✅
-7. Close Area after defeating boss - ✅
-8. Stats on choosing a class - ✅
-9. UI Improvements - ✅
-10. When Leveling up add a popup with increased stats - xxx
-11. Add a paragraph by paragraph delay on story scene
-12. ENEMY DROPS - xxx
-13. Change Transition to orange colors - ✅
-14. revamp UI of game.html - ✅
+~ Explore, Sleep, page/functionality - ✅
+~ Battle Flow - ✅
+~ Battle Animation - ✅
+~ Battle Character - ✅
+~ Exit Function? - ✅
+~ Close Area after defeating boss - ✅
+~ Stats on choosing a class - ✅
+~ UI Improvements - ✅ 
+~ Change Transition to orange colors - ✅
+~ revamp UI of game.html - ✅
+~ 
+~ Video Background on Game Start Menu - xxx
+~ When Leveling up add a popup with increased stats - xxx
+~ Add a paragraph by paragraph delay on story scene
+~ ENEMY DROPS - xxx
