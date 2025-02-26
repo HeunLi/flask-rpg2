@@ -163,7 +163,7 @@ def explore():
         if enemy is not None:
             world_state["current_battle"] = {"enemy": enemy, "area": location}
             save_world(world_state)
-            return redirect(url_for("game/battle.html", location=location, enemy=enemy))
+            return redirect(url_for("battle", location=location, enemy=enemy))
 
     # if enemy is none meaning area is cleared
     if enemy is None:

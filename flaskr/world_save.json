@@ -4,10 +4,15 @@
             "Kapri",
             "Diwata",
             "Tikbalang"
+        ],
+        "Mountains": [],
+        "Cave": [],
+        "Swamp": [
+            "Mud Monster"
         ]
     },
     "visited_areas": [
-        "Forest"
-    ],
-    "current_battle": {}
+        "Forest",
+        "Swamp"
+    ]
 }
